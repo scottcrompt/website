@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Choose your language | Make it SIMPL – AI Fit Test</title>
+  <meta name="description" content="Pick your language to start the AI Fit Test from Make it SIMPL." />
+  <meta property="og:title" content="Make it SIMPL – AI Fit Test" />
+  <meta property="og:description" content="Pick your language to start the AI Fit Test." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://makeitsimpl.ai" />
+  <meta property="og:image" content="/og-image.png" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{--bg:#0b1220;--card:#101827;--muted:#7c8799;--text:#f8fafc;--accent:#60a5fa;--border:#1f2937}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji;line-height:1.4;background:radial-gradient(1200px 600px at 70% -10%,#1b2a4a 0%,#0b1220 60%),var(--bg);color:var(--text)}
+    .wrap{min-height:100%;display:grid;place-items:center;padding:32px}
+    .card{width:100%;max-width:720px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border:1px solid var(--border);border-radius:24px;padding:28px 24px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .head{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#22d3ee);display:grid;place-items:center;font-weight:700;color:#0b1220}
+    h1{font-size:clamp(22px,3vw,30px);margin:0}
+    p.lead{margin:6px 0 22px;color:var(--muted)}
+    .detect{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 22px}
+    .primary{appearance:none;border:1px solid transparent;background:var(--accent);color:#02111f;padding:12px 16px;border-radius:14px;font-weight:700;cursor:pointer}
+    .muted{appearance:none;border:1px solid var(--border);background:#0e1526;color:var(--text);padding:12px 16px;border-radius:14px;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    .lang{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:16px;padding:14px 16px;background:linear-gradient(180deg,#0c1426,#0b1220);cursor:pointer;transition:transform .08s ease, border-color .15s ease}
+    .lang:hover{transform:translateY(-2px);border-color:#2a3a54}
+    .flag{font-size:20px}
+    .meta{font-size:12px;color:var(--muted)}
+    .footer{margin-top:20px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    a{color:var(--text)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="title">
+      <div class="head">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">AI</div>
+          <div>
+            <div style="letter-spacing:.08em; font-size:12px; color:var(--muted); text-transform:uppercase">Make it SIMPL</div>
+            <h1 id="title">Choose your language</h1>
+          </div>
+        </div>
+        <div class="meta">AI Fit Test</div>
+      </div>
+
+      <p class="lead">We’ll save your choice so you land in the right place next time.</p>
+
+      <div class="detect">
+        <button id="btn-continue" class="primary" aria-live="polite">Continue in English</button>
+        <button class="muted" id="clearPref" title="Clear saved language">Reset choice</button>
+      </div>
+
+      <div class="grid" aria-label="Language choices">
+        <button class="lang" data-lang="en" aria-label="English">
+          <span class="flag">🇬🇧</span>
+          <div>
+            <div>English</div>
+            <div class="meta">docs.google.com</div>
+          </div>
+        </button>
+        <button class="lang" data-lang="fr" aria-label="Français">
+          <span class="flag">🇫🇷</span>
+          <div>
+            <div>Français</div>
+            <div class="meta">docs.google.com</div>
+          </div>
+        </button>
+              </div>
+
+      <div class="footer">
+        <div>We only store your language in your browser (localStorage). No tracking.</div>
+        <div>
+          <a href="/privacy" rel="noopener">Privacy</a>
+          <span aria-hidden="true"> • </span>
+          <a href="mailto:scott@makeitsimpl.ai">Contact</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // === CONFIGURABLE TARGETS ===============================================
+    // Map language codes to the URL you want to send users to.
+    // Replace these with your real destinations (internal routes or external forms)
+    const DEST = {
+      en: "https://docs.google.com/forms/d/e/1FAIpQLSccR1kcYk5pySNXnsfds8EAnYVqCOdM3gTD5rN6XJWrAHHzoQ/viewform?usp=header",
+      fr: "https://docs.google.com/forms/d/e/1FAIpQLSesl-pe9rmhxsXN68nrpGBwWBpUloxF-T4gwIz2bTlFLnDE7A/viewform?usp=header"
+    };
+
+    const KEY = "langPref"; // localStorage key
+
+    function getBrowserLang(){
+      const raw = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+      if(raw.startsWith("fr")) return "fr";
+      return "en";
+    }
+
+    function savePref(lang){
+      try{ localStorage.setItem(KEY, lang); }catch(e){}
+    }
+
+    function readPref(){
+      try{ return localStorage.getItem(KEY); }catch(e){ return null }
+    }
+
+    function go(lang){
+      const url = DEST[lang] || DEST.en;
+      savePref(lang);
+      window.location.href = url;
+    }
+
+    // If there is a saved preference and we're at the root, auto-forward.
+    (function autoForward(){
+      const pref = readPref();
+      const isRoot = ["/", "/index.html"].includes(window.location.pathname);
+      const hasQueryLang = new URLSearchParams(window.location.search).get("lang");
+      if(hasQueryLang && DEST[hasQueryLang]){ return go(hasQueryLang); }
+      if(pref && isRoot){ return go(pref); }
+    })();
+
+    // Setup UI
+    (function setup(){
+      const preferred = readPref() || getBrowserLang();
+      const btn = document.getElementById("btn-continue");
+      const labels = { en: "English", fr: "Français" };
+      btn.textContent = `Continue in ${labels[preferred] || 'English'}`;
+      btn.addEventListener('click', () => go(preferred));
+
+      document.querySelectorAll('.lang').forEach(el =>{
+        el.addEventListener('click', ()=>{
+          const lang = el.getAttribute('data-lang');
+          go(lang);
+        });
+      });
+
+      document.getElementById('clearPref').addEventListener('click', ()=>{
+        try{ localStorage.removeItem(KEY); }catch(e){}
+        alert('Saved language cleared.');
+      })
+    })();
+  </script>
+</body>
+</html>
