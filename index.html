@@ -668,18 +668,36 @@
   </div>
 
   <!-- Footer -->
-  <footer style="padding:40px 0;border-top:1px solid rgba(255,255,255,0.06);">
+  <footer style="padding:40px 0;border-top:1px solid rgba(255,255,255,0.06);background:var(--bg);width:100%;position:relative;">
     <div class="container">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-        <div style="color:var(--muted);font-size:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;min-height:60px;">
+        <div style="color:var(--muted);font-size:14px;flex:1;min-width:200px;">
           © 2025 Make it SIMPL - AI Automation for SME Growth
         </div>
-        <div style="display:flex;gap:24px;font-size:14px;">
-          <a href="privacy.html" style="color:var(--muted);">Privacy</a>
-          <a href="mailto:scott@makeitsimpl.ai" style="color:var(--muted);">Contact</a>
+        <div style="display:flex;gap:32px;font-size:14px;align-items:center;">
+          <a href="privacy.html" style="color:var(--accent);text-decoration:none;padding:10px 16px;border-radius:8px;transition:all 0.3s ease;border:1px solid rgba(96,165,250,0.3);background:rgba(96,165,250,0.1);font-weight:600;" onmouseover="this.style.color='#ffffff';this.style.borderColor='var(--accent)';this.style.backgroundColor='var(--accent)'" onmouseout="this.style.color='var(--accent)';this.style.borderColor='rgba(96,165,250,0.3)';this.style.backgroundColor='rgba(96,165,250,0.1)'">Privacy</a>
+          <a href="mailto:scott@makeitsimpl.ai" style="color:var(--accent);text-decoration:none;padding:10px 16px;border-radius:8px;transition:all 0.3s ease;border:1px solid rgba(96,165,250,0.3);background:rgba(96,165,250,0.1);font-weight:600;" onmouseover="this.style.color='#ffffff';this.style.borderColor='var(--accent)';this.style.backgroundColor='var(--accent)'" onmouseout="this.style.color='var(--accent)';this.style.borderColor='rgba(96,165,250,0.3)';this.style.backgroundColor='rgba(96,165,250,0.1)'">Contact</a>
         </div>
       </div>
     </div>
+    
+    <!-- Mobile responsive layout -->
+    <style>
+      @media (max-width: 768px) {
+        footer .container > div {
+          flex-direction: column !important;
+          text-align: center !important;
+          gap: 24px !important;
+        }
+        footer .container > div > div:first-child {
+          flex: none !important;
+          min-width: auto !important;
+        }
+        footer .container > div > div:last-child {
+          gap: 20px !important;
+        }
+      }
+    </style>
   </footer>
 
   <script>
@@ -915,7 +933,12 @@
       const btn = document.getElementById("btn-continue");
       const labels = { en: "🚀 Start Your AI Fit Test", fr: "🚀 Commencer votre AI Fit Test" };
       btn.textContent = labels[preferred] || labels.en;
-      btn.addEventListener('click', () => go(preferred));
+      
+      // Update main CTA button to use current page language
+      btn.addEventListener('click', () => {
+        const currentPageLang = readPageLang() || getBrowserLang();
+        go(currentPageLang);
+      });
 
       // Initialize page language
       const savedPageLang = readPageLang() || getBrowserLang();
@@ -926,6 +949,9 @@
         btn.addEventListener('click', () => {
           const lang = btn.getAttribute('data-lang');
           switchLanguage(lang);
+          // Update main CTA button text when language switches
+          const mainBtn = document.getElementById("btn-continue");
+          mainBtn.textContent = labels[lang] || labels.en;
         });
       });
 
