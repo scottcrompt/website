@@ -392,6 +392,33 @@
     .cookie-decline{background:rgba(255,255,255,0.1);color:var(--text);border:1px solid rgba(255,255,255,0.2)}
     .cookie-decline:hover{background:rgba(255,255,255,0.15)}
 
+    /* ===== Language Switcher ===== */
+    .lang-switcher{
+      position:fixed;top:20px;right:20px;z-index:1000;
+      display:flex;gap:8px;
+    }
+    .lang-btn{
+      appearance:none;border:none;cursor:pointer;
+      font-family:inherit;font-weight:700;font-size:14px;
+      padding:8px 12px;border-radius:8px;
+      background:rgba(12,20,38,0.9);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--muted);transition:all .2s ease;
+      backdrop-filter:blur(8px);
+    }
+    .lang-btn:hover{
+      border-color:rgba(255,255,255,0.2);
+      color:var(--text);transform:translateY(-1px);
+    }
+    .lang-btn.active{
+      background:var(--accent);color:#02111f;
+      border-color:var(--accent);
+    }
+    @media (max-width: 768px) {
+      .lang-switcher{top:16px;right:16px;}
+      .lang-btn{padding:6px 10px;font-size:12px;}
+    }
+
     /* ===== Utility Classes ===== */
     .text-center{text-align:center}
     .text-large{font-size:20px}
@@ -407,6 +434,12 @@
   </style>
 </head>
 <body>
+  <!-- Language Switcher -->
+  <div class="lang-switcher">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+  </div>
+
   <!-- Hero Section -->
   <section class="section hero">
     <span class="glow one" aria-hidden="true"></span>
@@ -560,7 +593,7 @@
             <h4 style="margin:0 0 8px;color:#ffffff;">Select Your Pain Points</h4>
             <p class="text-muted mb-0">Check the time-wasting tasks that slow your business down.</p>
           </div>
-          <div class="cta-step" style="text-align:center;">
+          <div class="cta-step">
             <div class="step-number">3</div>
             <h4 style="margin:0 0 8px;color:#ffffff;">Get Your Results</h4>
             <p class="text-muted mb-0">Receive your FREE personalized AI game plan via email.</p>
@@ -642,7 +675,7 @@
           © 2025 Make it SIMPL - AI Automation for SME Growth
         </div>
         <div style="display:flex;gap:24px;font-size:14px;">
-          <a href="/privacy" style="color:var(--muted);">Privacy</a>
+          <a href="privacy.html" style="color:var(--muted);">Privacy</a>
           <a href="mailto:scott@makeitsimpl.ai" style="color:var(--muted);">Contact</a>
         </div>
       </div>
@@ -650,6 +683,88 @@
   </footer>
 
   <script>
+    // === LANGUAGE TRANSLATIONS ===============================================
+    const TRANSLATIONS = {
+      en: {
+        title: "Find THE #1 AI Opportunity in your Business in 10 Minutes",
+        subtitle: "Most businesses waste months (and thousands) on the wrong AI tools. Here's how to avoid it in 10 minutes.",
+        bigHook: "The best 10 minutes investment you will make this year.",
+        clarityTitle: "🧭 Your AI Clarity Promise",
+        clarityDesc: "This isn't just another \"AI will save you\" pitch. This is your compass to cut through the noise and find exactly where AI will make the biggest impact in YOUR business, right now.",
+        precision: "Pinpoint Precision",
+        precisionDesc: "No guesswork, no hype. Just your #1 opportunity.",
+        readyWins: "Ready-to-Use Wins",
+        readyWinsDesc: "Tools you can implement tomorrow.",
+        roiFocused: "ROI-Focused",
+        roiFocusedDesc: "Save time and money from day one.",
+        problemTitle: "The problem isn't that AI doesn't work for your business...",
+        problemSubtitle: "It's that you don't know where to start.",
+        statText: "of AI adoption fails because businesses start with the wrong use case",
+        problemDesc: "Endless tools, endless promises... This guide helps you cut through the noise to pinpoint your #1 automation opportunity. So you get clarity and return on investment, fast.",
+        categoriesTitle: "Every AI system fits into one of these three categories:",
+        categoriesSubtitle: "Let's prioritize for you...",
+        ctaTitle: "Find your Best AI Move in 10 Minutes",
+        ctaDesc: "You'll walk away knowing exactly where to start with AI, no tech jargon, no guesswork.",
+        step1: "Access the Form",
+        step1Desc: "Pick your language and jump straight into the assessment.",
+        step2: "Select Your Pain Points",
+        step2Desc: "Check the time-wasting tasks that slow your business down.",
+        step3: "Get Your Results",
+        step3Desc: "Receive your FREE personalized AI game plan via email.",
+        learnMore: "📖 Want to learn more first?",
+        downloadGuide: "Download the complete AI Fit Test Guide",
+        chooseLanguage: "Choose your language to start:",
+        startTest: "🚀 Start Your AI Fit Test",
+        noTracking: "No tracking - we only store your language preference locally.",
+        cookies: "🍪 We use cookies",
+        cookiesDesc: "We use essential cookies to improve your experience. By continuing, you agree to our use of cookies.",
+        accept: "Accept",
+        decline: "Decline",
+        privacy: "Privacy",
+        contact: "Contact",
+        copyright: "© 2025 Make it SIMPL - AI Automation for SME Growth"
+      },
+      fr: {
+        title: "Trouvez LA #1 Opportunité IA de votre Entreprise en 10 Minutes",
+        subtitle: "La plupart des entreprises gaspillent des mois (et des milliers) sur les mauvais outils IA. Voici comment l'éviter en 10 minutes.",
+        bigHook: "Le meilleur investissement de 10 minutes que vous ferez cette année.",
+        clarityTitle: "🧭 Votre Promesse de Clarté IA",
+        clarityDesc: "Ce n'est pas juste un autre discours \"l'IA va vous sauver\". C'est votre boussole pour couper à travers le bruit et trouver exactement où l'IA aura le plus grand impact dans VOTRE entreprise, maintenant.",
+        precision: "Précision Ciblée",
+        precisionDesc: "Pas de devinettes, pas de battage. Juste votre opportunité #1.",
+        readyWins: "Victoires Prêtes à l'Emploi",
+        readyWinsDesc: "Des outils que vous pouvez implémenter demain.",
+        roiFocused: "Axé sur le ROI",
+        roiFocusedDesc: "Économisez temps et argent dès le premier jour.",
+        problemTitle: "Le problème n'est pas que l'IA ne fonctionne pas pour votre entreprise...",
+        problemSubtitle: "C'est que vous ne savez pas par où commencer.",
+        statText: "des adoptions d'IA échouent parce que les entreprises commencent avec le mauvais cas d'usage",
+        problemDesc: "Des outils sans fin, des promesses sans fin... Ce guide vous aide à couper à travers le bruit pour identifier votre opportunité d'automatisation #1. Ainsi vous obtenez clarté et retour sur investissement, rapidement.",
+        categoriesTitle: "Chaque système IA s'inscrit dans l'une de ces trois catégories :",
+        categoriesSubtitle: "Laissez-nous prioriser pour vous...",
+        ctaTitle: "Trouvez votre Meilleur Mouvement IA en 10 Minutes",
+        ctaDesc: "Vous repartirez en sachant exactement par où commencer avec l'IA, pas de jargon technique, pas de devinettes.",
+        step1: "Accéder au Formulaire",
+        step1Desc: "Choisissez votre langue et plongez directement dans l'évaluation.",
+        step2: "Sélectionnez vos Points de Douleur",
+        step2Desc: "Cochez les tâches chronophages qui ralentissent votre entreprise.",
+        step3: "Obtenez vos Résultats",
+        step3Desc: "Recevez votre plan de jeu IA personnalisé GRATUIT par email.",
+        learnMore: "📖 Vous voulez d'abord en savoir plus ?",
+        downloadGuide: "Téléchargez le guide complet du Test d'Adéquation IA",
+        chooseLanguage: "Choisissez votre langue pour commencer :",
+        startTest: "🚀 Commencer votre Test d'Adéquation IA",
+        noTracking: "Pas de suivi - nous ne stockons que votre préférence de langue localement.",
+        cookies: "🍪 Nous utilisons des cookies",
+        cookiesDesc: "Nous utilisons des cookies essentiels pour améliorer votre expérience. En continuant, vous acceptez notre utilisation des cookies.",
+        accept: "Accepter",
+        decline: "Refuser",
+        privacy: "Confidentialité",
+        contact: "Contact",
+        copyright: "© 2025 Make it SIMPL - Automatisation IA pour la Croissance des PME"
+      }
+    };
+
     // === CONFIGURABLE TARGETS ===============================================
     const DEST = {
       en: "https://docs.google.com/forms/d/e/1FAIpQLSeLNUt4ENbJfc05oV_U7YetznXAtF9Oo-XYrk0COBInHyWT3g/viewform?usp=header",
@@ -660,6 +775,7 @@
       fr: "https://drive.google.com/file/d/1VIzlczxmWIP6OYQsG4b7TumKrHo6g5z8/view?usp=sharing"
     };
     const KEY = "langPref"; // localStorage key
+    const LANG_KEY = "pageLang"; // localStorage key for page language
 
     function getBrowserLang(){
       const raw = (navigator.language || navigator.userLanguage || "en").toLowerCase();
@@ -669,6 +785,120 @@
     function savePref(lang){ try{ localStorage.setItem(KEY, lang); }catch(e){} }
     function readPref(){ try{ return localStorage.getItem(KEY); }catch(e){ return null } }
     function go(lang){ const url = DEST[lang] || DEST.en; savePref(lang); window.location.href = url; }
+
+    // === LANGUAGE SWITCHING ===============================================
+    function savePageLang(lang){ try{ localStorage.setItem(LANG_KEY, lang); }catch(e){} }
+    function readPageLang(){ try{ return localStorage.getItem(LANG_KEY); }catch(e){ return null } }
+    
+    function switchLanguage(lang) {
+      const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+      
+      // Helper function to safely update element
+      function updateElement(selector, content, isHTML = false) {
+        const element = document.querySelector(selector);
+        if (element) {
+          if (isHTML) {
+            element.innerHTML = content;
+          } else {
+            element.textContent = content;
+          }
+        }
+      }
+      
+      // Update page content
+      updateElement('h1', t.title);
+      updateElement('.hero-subtitle', t.subtitle);
+      updateElement('.big-hook', t.bigHook);
+      updateElement('.clarity-promise h3', t.clarityTitle);
+      updateElement('.clarity-promise p', t.clarityDesc);
+      
+      // Update compass points
+      const compassPoints = document.querySelectorAll('.compass-point');
+      if (compassPoints.length >= 3) {
+        updateElement('.compass-point:nth-child(1) strong', t.precision);
+        updateElement('.compass-point:nth-child(1) small', t.precisionDesc);
+        updateElement('.compass-point:nth-child(2) strong', t.readyWins);
+        updateElement('.compass-point:nth-child(2) small', t.readyWinsDesc);
+        updateElement('.compass-point:nth-child(3) strong', t.roiFocused);
+        updateElement('.compass-point:nth-child(3) small', t.roiFocusedDesc);
+      }
+      
+      // Update problem section
+      updateElement('.problem h2', t.problemTitle);
+      updateElement('.problem .text-large', t.problemSubtitle);
+      updateElement('.stat-text', t.statText);
+      updateElement('.problem p:last-child', t.problemDesc);
+      
+      // Update categories section
+      const categoriesSection = document.querySelector('.ai-types');
+      if (categoriesSection && categoriesSection.parentElement) {
+        updateElement('.ai-types + .text-center h2', t.categoriesTitle);
+        updateElement('.ai-types + .text-center .text-large', t.categoriesSubtitle);
+      }
+      
+      // Update CTA section
+      updateElement('.cta-box h2', t.ctaTitle);
+      updateElement('.cta-box .text-large', t.ctaDesc);
+      
+      // Update steps
+      const steps = document.querySelectorAll('.cta-step h4');
+      const stepDescs = document.querySelectorAll('.cta-step p');
+      if (steps.length >= 3 && stepDescs.length >= 3) {
+        steps[0].textContent = t.step1;
+        stepDescs[0].textContent = t.step1Desc;
+        steps[1].textContent = t.step2;
+        stepDescs[1].textContent = t.step2Desc;
+        steps[2].textContent = t.step3;
+        stepDescs[2].textContent = t.step3Desc;
+      }
+      
+      // Update other elements
+      const ctaH3Elements = document.querySelectorAll('.cta-box h3');
+      if (ctaH3Elements.length >= 2) {
+        ctaH3Elements[0].textContent = t.learnMore;
+        ctaH3Elements[1].textContent = t.chooseLanguage;
+      }
+      
+      const ctaPElements = document.querySelectorAll('.cta-box p');
+      if (ctaPElements.length >= 2) {
+        // Find the download guide paragraph (should be the second one)
+        for (let i = 0; i < ctaPElements.length; i++) {
+          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez')) {
+            ctaPElements[i].textContent = t.downloadGuide;
+            break;
+          }
+        }
+        // Update the last paragraph (no tracking)
+        const lastP = ctaPElements[ctaPElements.length - 1];
+        if (lastP) {
+          lastP.innerHTML = `<span style="color:var(--success);">●</span> ${t.noTracking}`;
+        }
+      }
+      
+      updateElement('#btn-continue', t.startTest);
+      
+      // Update cookie consent
+      updateElement('#cookie-consent h4', t.cookies);
+      updateElement('#cookie-consent p', t.cookiesDesc);
+      updateElement('.cookie-accept', t.accept);
+      updateElement('.cookie-decline', t.decline);
+      
+      // Update footer
+      updateElement('footer a[href="privacy.html"]', t.privacy);
+      updateElement('footer a[href^="mailto"]', t.contact);
+      updateElement('footer div:first-child', t.copyright);
+      
+      // Update language switcher buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+      
+      // Save preference
+      savePageLang(lang);
+    }
 
     // If there is a saved preference and we're at the root, auto-forward.
     (function autoForward(){
@@ -686,6 +916,18 @@
       const labels = { en: "🚀 Start Your AI Fit Test", fr: "🚀 Commencer votre AI Fit Test" };
       btn.textContent = labels[preferred] || labels.en;
       btn.addEventListener('click', () => go(preferred));
+
+      // Initialize page language
+      const savedPageLang = readPageLang() || getBrowserLang();
+      switchLanguage(savedPageLang);
+
+      // Setup language switcher buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.getAttribute('data-lang');
+          switchLanguage(lang);
+        });
+      });
 
       document.querySelectorAll('.lang-option').forEach(el =>{
         el.addEventListener('click', ()=>{
