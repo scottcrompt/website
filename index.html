@@ -560,10 +560,33 @@
             <h4 style="margin:0 0 8px;color:#ffffff;">Select Your Pain Points</h4>
             <p class="text-muted mb-0">Check the time-wasting tasks that slow your business down.</p>
           </div>
-          <div class="cta-step">
+          <div class="cta-step" style="text-align:center;">
             <div class="step-number">3</div>
-            <h4 style="margin:0 0 8px;color:#ffffff;text-align:center;">Get Your Results</h4>
+            <h4 style="margin:0 0 8px;color:#ffffff;">Get Your Results</h4>
             <p class="text-muted mb-0">Receive your FREE personalized AI game plan via email.</p>
+          </div>
+        </div>
+
+        <!-- PDF Download Section -->
+        <div style="margin:32px 0 24px;">
+          <h3 style="color:#ffffff;margin:0 0 16px;text-align:center;">📖 Want to learn more first?</h3>
+          <p style="color:var(--muted);text-align:center;margin:0 0 20px;">Download the complete AI Fit Test Guide</p>
+          
+          <div class="pdf-download-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 24px;">
+            <button class="pdf-btn" data-lang="en" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
+              <span style="font-size:24px;">🇬🇧</span>
+              <div style="text-align:left;">
+                <div style="font-size:16px;">English PDF</div>
+                <div style="font-size:12px;color:var(--muted);">Download Guide</div>
+              </div>
+            </button>
+            <button class="pdf-btn" data-lang="fr" style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
+              <span style="font-size:24px;">🇫🇷</span>
+              <div style="text-align:left;">
+                <div style="font-size:16px;">PDF Français</div>
+                <div style="font-size:12px;color:var(--muted);">Télécharger le Guide</div>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -593,9 +616,6 @@
         </div>
 
         <div style="margin-top:24px;">
-          <p style="font-size:14px;color:var(--muted);margin:0 0 16px;">
-            Want to learn more first? <a id="pdf-link" href="#" target="_blank" style="color:var(--accent);text-decoration:underline;">Download the AI Fit Test Guide (PDF)</a>
-          </p>
           <p style="font-size:14px;color:var(--muted);margin:0;">
             <span style="color:var(--success);">●</span> No tracking — we only store your language preference locally.
           </p>
@@ -678,15 +698,23 @@
         });
       });
 
-      // Setup PDF link
-      const pdfLink = document.getElementById('pdf-link');
-      pdfLink.href = PDF_LINKS[preferred] || PDF_LINKS.en;
-      
-      // Update PDF link when language changes
-      document.querySelectorAll('.lang-option').forEach(el => {
-        el.addEventListener('click', () => {
-          const lang = el.getAttribute('data-lang');
-          pdfLink.href = PDF_LINKS[lang] || PDF_LINKS.en;
+      // Setup PDF buttons
+      document.querySelectorAll('.pdf-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.getAttribute('data-lang');
+          const url = PDF_LINKS[lang] || PDF_LINKS.en;
+          window.open(url, '_blank');
+        });
+        
+        // Add hover effects
+        btn.addEventListener('mouseenter', () => {
+          btn.style.transform = 'translateY(-2px)';
+          btn.style.boxShadow = '0 8px 24px rgba(52,211,153,.3)';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = 'none';
         });
       });
 
