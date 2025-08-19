@@ -753,35 +753,34 @@
     }
 
     .footer-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-  font-size: 14px;
-}
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
 
-.footer-links a {
-  color: rgba(255, 255, 255, 0.65);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
 
-.footer-links a:hover,
-.footer-links a:focus-visible {
-  color: #ffffff;
-  text-decoration: underline;
-}
+    .footer-links a:hover,
+    .footer-links a:focus-visible {
+      color: #ffffff;
+      text-decoration: underline;
+    }
 
-/* subtle dot separator between links */
-.footer-links a + a::before {
-  content: "•";
-  margin: 0 8px;
-  color: rgba(255, 255, 255, 0.35);
-}
-
+    /* subtle dot separator between links */
+    .footer-links a+a::before {
+      content: "•";
+      margin: 0 8px;
+      color: rgba(255, 255, 255, 0.35);
+    }
   </style>
 </head>
 
@@ -1111,7 +1110,34 @@
         decline: "Decline",
         privacy: "Privacy",
         contact: "Contact",
-        copyright: "© 2025 Make it SIMPL - AI Automation for SME Growth"
+        copyright: "© 2025 Make it SIMPL - AI Automation for SME Growth",
+        // EN
+        aiCards: [
+          {
+            title: "Conversational AI",
+            desc: "Talks to customers for you, chat, voice, or messaging, 24/7. Follows one script with high precision and flexibility.",
+            bestLabel: "BEST FOR:",
+            bestText: " booking appointments or reservations, qualifying leads, handling FAQs, re-engaging old customers, customer support.",
+            winLabel: "BIG WIN:",
+            winText: " More leads answered instantly → more sales without extra staff."
+          },
+          {
+            title: "AI Tools",
+            desc: "Helps your team work faster and smarter with AI-powered assistance.",
+            bestLabel: "BEST FOR:",
+            bestText: " research, content creation, document drafting, internal knowledge retrieval, prospect screening, meeting summaries.",
+            winLabel: "BIG WIN:",
+            winText: " Get hours of work done in minutes → focus on high-value tasks."
+          },
+          {
+            title: "AI Workflow Automation",
+            desc: "Runs whole processes automatically, without you touching them.",
+            bestLabel: "BEST FOR:",
+            bestText: " resume screening, document processing, email follow-up, report generation, CRM connection, notification handling.",
+            winLabel: "BIG WIN:",
+            winText: " Save entire days of manual work → scale without extra hires."
+          }
+        ],
       },
       fr: {
         title: "Trouve LA Grosse Opportunité IA de TON Entreprise. GRATUITEMENT.",
@@ -1150,7 +1176,33 @@
         decline: "Refuser",
         privacy: "Confidentialité",
         contact: "Contact",
-        copyright: "© 2025 Make it SIMPL - Automatisation IA pour la Croissance des PME"
+        copyright: "© 2025 Make it SIMPL - Automatisation IA pour la Croissance des PME",
+        aiCards: [
+          {
+            title: "IA Conversationnelle",
+            desc: "Parle à tes clients pour toi (chat, voix ou messagerie) 24/7. Suit un script unique avec précision et flexibilité.",
+            bestLabel: "IDÉAL POUR :",
+            bestText: " prise de rendez-vous ou réservations, qualification de prospects, gestion des FAQ, ré-activation d’anciens clients, support client.",
+            winLabel: "GROS GAIN :",
+            winText: " Plus de prospects servis instantanément → plus de ventes sans personnel supplémentaire."
+          },
+          {
+            title: "Outils IA",
+            desc: "Aide ton équipe à travailler plus vite et plus intelligemment grâce à l’assistance IA.",
+            bestLabel: "IDÉAL POUR :",
+            bestText: " recherche, création de contenu, rédaction de documents, recherche d’informations internes, présélection de prospects, comptes-rendus de réunions.",
+            winLabel: "GROS GAIN :",
+            winText: " Des heures de travail en quelques minutes → focus sur les tâches à forte valeur."
+          },
+          {
+            title: "Automatisations IA",
+            desc: "Fait tourner des processus entiers automatiquement, sans intervention.",
+            bestLabel: "IDÉAL POUR :",
+            bestText: " tri de CV, traitement de documents, relances email, génération de rapports, connexion au CRM, gestion des notifications.",
+            winLabel: "GROS GAIN :",
+            winText: " Des journées entières de tâches manuelles économisées → scaler sans embauches."
+          }
+        ]
       }
     };
 
@@ -1181,6 +1233,24 @@
 
     function switchLanguage(lang) {
       const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+      // Update AI cards (title, desc, best-for, big-win)
+      const cards = document.querySelectorAll('.ai-type');
+      cards.forEach((card, i) => {
+        const c = (t.aiCards || [])[i];
+        if (!c) return;
+
+        // Title & description
+        card.querySelector('h3')?.replaceChildren(document.createTextNode(c.title));
+        card.querySelector('.ai-type-desc')?.replaceChildren(document.createTextNode(c.desc));
+
+        // Best-for pill
+        const best = card.querySelector('.ai-type-best');
+        if (best) best.innerHTML = `<strong>${c.bestLabel}</strong>${c.bestText}`;
+
+        // Big win pill
+        const win = card.querySelector('.ai-type-win');
+        if (win) win.innerHTML = `<strong>${c.winLabel}</strong>${c.winText}`;
+      });
 
       // Helper function to safely update element
       function updateElement(selector, content, isHTML = false) {
@@ -1219,10 +1289,10 @@
       updateElement('.problem p:last-child', t.problemDesc);
 
       // Update categories section
-      const categoriesSection = document.querySelector('.ai-types');
-      if (categoriesSection && categoriesSection.parentElement) {
-        updateElement('.ai-types + .text-center h2', t.categoriesTitle);
-        updateElement('.ai-types + .text-center .text-large', t.categoriesSubtitle);
+      const aiHeader = document.querySelector('.ai-types')?.previousElementSibling;
+      if (aiHeader && aiHeader.matches('.text-center')) {
+        aiHeader.querySelector('h2')?.replaceChildren(document.createTextNode(t.categoriesTitle));
+        aiHeader.querySelector('.text-large')?.replaceChildren(document.createTextNode(t.categoriesSubtitle));
       }
 
       // Update CTA section
