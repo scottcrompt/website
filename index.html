@@ -1067,9 +1067,52 @@
         <a class="footer-contact" href="mailto:scott@makeitsimpl.ai">
           ✉️ Contact Us
         </a>
+        <button class="copy-email" type="button" aria-label="Copy email">Copy</button>
       </div>
     </div>
+    <style>
+      .copy-email {
+        background: none;
+        border: 0;
+        padding: 0 2px;
+        cursor: pointer;
+        color: rgba(255, 255, 255, .65);
+        font: inherit;
+        text-decoration: underline;
+      }
 
+      .copy-email:focus-visible,
+      .copy-email:hover {
+        color: #fff;
+      }
+
+      .copy-email::after {
+        content: attr(data-status);
+        margin-left: 6px;
+        opacity: .8;
+      }
+    </style>
+    <script>
+      (function () {
+        const btn = document.querySelector('.copy-email');
+        if (!btn) return;
+        const email = 'scott@makeitsimpl.ai';
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(email);
+            btn.dataset.status = 'Copied!';
+            setTimeout(() => btn.dataset.status = '', 1500);
+          } catch {
+            btn.dataset.status = 'Press Ctrl/Cmd+C';
+            const ta = Object.assign(document.createElement('textarea'), { value: email });
+            ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+            setTimeout(() => btn.dataset.status = '', 1500);
+          }
+        });
+      })();
+    </script>
 
 
   </footer>
