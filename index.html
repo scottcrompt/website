@@ -799,6 +799,11 @@
         content: none;
         /* remove dot when stacked */
       }
+
+      .footer-separator {
+        color: #666;
+        /* stays neutral, no hover effect */
+      }
     }
   </style>
 </head>
@@ -1058,8 +1063,8 @@
       <!-- Footer Links -->
       <div class="footer-links">
         <a class="footer-privacy" href="privacy.html">📄 Privacy Policy</a>
-        <a class="footer-contact" href="https://mail.google.com/mail/?view=cm&to=scott@makeitsimpl.ai" target="_blank"
-          rel="noopener">
+        <span class="footer-separator">·</span>
+        <a class="footer-contact" href="mailto:scott@makeitsimpl.ai">
           ✉️ Contact Us
         </a>
       </div>
@@ -1321,7 +1326,7 @@
       if (ctaPElements.length >= 2) {
         // Find the download guide paragraph (should be the second one)
         for (let i = 0; i < ctaPElements.length; i++) {
-          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez'|'Télécharg/i')) {
+          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez' | 'Télécharg/i')) {
             ctaPElements[i].textContent = t.downloadGuide;
             break;
           }
