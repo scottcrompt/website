@@ -781,6 +781,25 @@
       margin: 0 8px;
       color: rgba(255, 255, 255, 0.35);
     }
+
+    @media (max-width: 768px) {
+      .footer-links {
+        flex-direction: column;
+        gap: 6px;
+        font-size: 15px;
+      }
+
+      .footer-links a {
+        display: block;
+        padding: 10px 8px;
+        /* better tap targets */
+      }
+
+      .footer-links a+a::before {
+        content: none;
+        /* remove dot when stacked */
+      }
+    }
   </style>
 </head>
 
@@ -1048,26 +1067,6 @@
 
 
 
-    <!-- Mobile responsive layout -->
-    <style>
-      @media (max-width: 768px) {
-        footer {
-          padding: 60px 0 40px !important;
-        }
-
-        footer div:nth-child(1) div:nth-child(2) {
-          flex-direction: column !important;
-          gap: 24px !important;
-        }
-
-        footer a {
-          width: 220px !important;
-          text-align: center !important;
-          padding: 14px 24px !important;
-          font-size: 16px !important;
-        }
-      }
-    </style>
   </footer>
 
   <script>
@@ -1322,7 +1321,7 @@
       if (ctaPElements.length >= 2) {
         // Find the download guide paragraph (should be the second one)
         for (let i = 0; i < ctaPElements.length; i++) {
-          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez')) {
+          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez'|'Télécharg/i')) {
             ctaPElements[i].textContent = t.downloadGuide;
             break;
           }
