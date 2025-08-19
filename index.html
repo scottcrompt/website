@@ -4,12 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Find Your #1 AI Opportunity in 10 Minutes | Make it SIMPL – AI Fit Test</title>
+  <title>Find THE #1 AI Opportunity for YOUR Business | Make it SIMPL – AI Fit Test</title>
   <meta name="description"
-    content="70% of AI adoption fails because businesses start with the wrong use case. Find the AI that will save you the most time and money in just 10 minutes." />
+    content="70% of AI adoption fails because businesses start with the wrong use case. Find the AI that will save you the most time and money in just 5 minutes." />
   <meta property="og:title" content="Make it SIMPL – AI Fit Test" />
-  <meta property="og:description"
-    content="Find the AI that will save you the most time and money in just 10 minutes." />
+  <meta property="og:description" content="Find the AI that will save you the most time and money in just 5 minutes." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://makeitsimpl.ai" />
   <meta property="og:image" content="/og-image.png" />
@@ -376,8 +375,12 @@
     .cta-steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
       margin: 32px 0;
+      display: flex;
+      justify-content: center;
+      /* centers all child divs horizontally */
+      gap: 2rem;
+      /* space between steps */
     }
 
     .cta-step {
@@ -514,10 +517,7 @@
       opacity: 1
     }
 
-    .lang-flag {
-      font-size: 32px;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .3));
-    }
+
 
     .lang-code {
       font-size: 16px;
@@ -779,14 +779,14 @@
           </div>
         </div>
 
-        <h1>Find THE #1 AI Opportunity in your Business in 10 Minutes</h1>
+        <h1>Find THE #1 AI Opportunity for YOUR Business for FREE</h1>
 
         <p class="hero-subtitle">
-          Most businesses waste months (and thousands) on the wrong AI tools. Here's how to avoid it in 10 minutes.
+          Most businesses waste months (and thousands) on the wrong AI tools. Here's how to avoid it in 5 minutes.
         </p>
 
         <div class="big-hook">
-          The best 10 minutes investment you will make this year.
+          The best 5 minutes investment you will make this year.
         </div>
 
         <!-- Clarity Promise Block -->
@@ -939,7 +939,7 @@
             style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 24px;">
             <button class="pdf-btn" data-lang="en"
               style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
-              <span style="font-size:24px;">🇬🇧</span>
+              <img class="flag-img" src="https://flagcdn.com/gb.svg" alt="GB" width="40" height="auto">
               <div style="text-align:left;">
                 <div style="font-size:16px;">English PDF</div>
                 <div style="font-size:12px;color:var(--muted);">Download Guide</div>
@@ -947,7 +947,7 @@
             </button>
             <button class="pdf-btn" data-lang="fr"
               style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
-              <span style="font-size:24px;">🇫🇷</span>
+              <img class="flag-img" src="https://flagcdn.com/fr.svg" alt="FR" width="40" height="auto">
               <div style="text-align:left;">
                 <div style="font-size:16px;">PDF Français</div>
                 <div style="font-size:12px;color:var(--muted);">Télécharger le Guide</div>
@@ -960,14 +960,14 @@
 
         <div class="lang-grid">
           <button class="lang-option" data-lang="en" aria-label="Take test in English">
-            <span class="lang-flag">🇬🇧</span>
+            <img class="flag-img" src="https://flagcdn.com/gb.svg" alt="GB" width="40" height="auto">
             <div class="lang-info">
               <h4>English</h4>
               <p>Take the AI Fit Test in English</p>
             </div>
           </button>
           <button class="lang-option" data-lang="fr" aria-label="Passer le test en Français">
-            <span class="lang-flag">🇫🇷</span>
+            <img class="flag-img" src="https://flagcdn.com/fr.svg" alt="FR" width="40" height="auto">
             <div class="lang-info">
               <h4>Français</h4>
               <p>Passer le AI Fit Test en français</p>
@@ -1001,22 +1001,24 @@
   </div>
 
   <!-- Footer -->
-  <footer style="padding:80px 0 60px;border-top:1px solid rgba(255,255,255,0.06);background:var(--bg);width:100%;clear:both;min-height:200px;position:relative;z-index:10;">
+  <footer
+    style="padding:80px 0 60px;border-top:1px solid rgba(255,255,255,0.06);background:var(--bg);width:100%;clear:both;min-height:200px;position:relative;z-index:10;">
     <div class="container">
       <!-- Copyright -->
-      <div style="text-align:center;color:var(--muted);font-size:14px;margin-bottom:40px;">
+      <div class="footer-copy" style="text-align:center;color:var(--muted);font-size:14px;margin-bottom:40px;">
         © 2025 Make it SIMPL - AI Automation for SME Growth
       </div>
 
       <!-- Footer Links -->
-      <div style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
-        <a href="privacy.html"
+      <div class="footer-links"
+        style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
+        <a class="footer-privacy" href="privacy.html"
           style="display:inline-block;color:#ffffff;background:linear-gradient(135deg,var(--accent),#3b82f6);text-decoration:none;padding:16px 32px;border-radius:12px;font-weight:700;font-size:18px;transition:all 0.3s ease;box-shadow:0 8px 24px rgba(96,165,250,0.4);border:2px solid transparent;min-width:180px;text-align:center;"
           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(96,165,250,0.5)';this.style.borderColor='#ffffff'"
           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(96,165,250,0.4)';this.style.borderColor='transparent'">
           📄 Privacy Policy
         </a>
-        <a href="mailto:scott@makeitsimpl.ai"
+        <a class="footer-contact" href="mailto:scott@makeitsimpl.ai"
           style="display:inline-block;color:#ffffff;background:linear-gradient(135deg,var(--accent),#3b82f6);text-decoration:none;padding:16px 32px;border-radius:12px;font-weight:700;font-size:18px;transition:all 0.3s ease;box-shadow:0 8px 24px rgba(96,165,250,0.4);border:2px solid transparent;min-width:180px;text-align:center;"
           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(96,165,250,0.5)';this.style.borderColor='#ffffff'"
           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(96,165,250,0.4)';this.style.borderColor='transparent'">
@@ -1031,10 +1033,12 @@
         footer {
           padding: 60px 0 40px !important;
         }
+
         footer div:nth-child(1) div:nth-child(2) {
           flex-direction: column !important;
           gap: 24px !important;
         }
+
         footer a {
           width: 220px !important;
           text-align: center !important;
@@ -1049,9 +1053,9 @@
     // === LANGUAGE TRANSLATIONS ===============================================
     const TRANSLATIONS = {
       en: {
-        title: "Find THE #1 AI Opportunity in your Business in 10 Minutes",
-        subtitle: "Most businesses waste months (and thousands) on the wrong AI tools. Here's how to avoid it in 10 minutes.",
-        bigHook: "The best 10 minutes investment you will make this year.",
+        title: "Find THE #1 AI Opportunity for your Business - FREE",
+        subtitle: "Most businesses waste months (and thousands) on the wrong AI tools. Here's how to avoid it in 5 minutes.",
+        bigHook: "The best 5 minutes investment you will make this year.",
         clarityTitle: "🧭 Your AI Clarity Promise",
         clarityDesc: "This isn't just another \"AI will save you\" pitch. This is your compass to cut through the noise and find exactly where AI will make the biggest impact in YOUR business, right now.",
         precision: "Pinpoint Precision",
@@ -1066,7 +1070,7 @@
         problemDesc: "Endless tools, endless promises... This guide helps you cut through the noise to pinpoint your #1 automation opportunity. So you get clarity and return on investment, fast.",
         categoriesTitle: "Every AI system fits into one of these three categories:",
         categoriesSubtitle: "Let's prioritize for you...",
-        ctaTitle: "Find your Best AI Move in 10 Minutes",
+        ctaTitle: "Find your Best AI Move in 5 Minutes",
         ctaDesc: "You'll walk away knowing exactly where to start with AI, no tech jargon, no guesswork.",
         step1: "Access the Form",
         step1Desc: "Pick your language and jump straight into the assessment.",
@@ -1088,9 +1092,9 @@
         copyright: "© 2025 Make it SIMPL - AI Automation for SME Growth"
       },
       fr: {
-        title: "Trouve L’Opportunité IA de ton Entreprise en 10 Minutes",
-        subtitle: "La plupart des entreprises gaspillent des mois (et des milliers d’euros) avec les mauvais outils IA. Voici comment l’éviter en 10 minutes.",
-        bigHook: "Le meilleur investissement de 10 minutes que tu feras cette année.",
+        title: "Trouve LA Grosse Opportunité IA de TON Entreprise. GRATUITEMENT.",
+        subtitle: "La plupart des entreprises gaspillent des mois (et des milliers d’euros) avec les mauvais outils IA. Voici comment l’éviter en 5 minutes.",
+        bigHook: "Le meilleur investissement de 5 minutes que tu feras cette année.",
         clarityTitle: "🧭 Ta Promesse de Clarté IA",
         clarityDesc: "Ce n’est pas un autre discours « l’IA va tout révolutionner ». C’est ta boussole trouver ta direction et découvrir où l’IA aura l’impact le plus fort dans TON entreprise, dès maintenant.",
         precision: "Précision Ciblée",
@@ -1105,26 +1109,26 @@
         problemDesc: "Trop d’outils, trop de promesses… Ce guide t’aide à faire le tri et à identifier ton opportunité d’automatisation n°1. Tu gagnes clarté et retour sur investissement, rapidement.",
         categoriesTitle: "Chaque système IA se classe dans l’une de ces trois catégories :",
         categoriesSubtitle: "Laisse-nous prioriser pour toi…",
-        ctaTitle: "Trouve ton Meilleur Mouvement IA en 10 Minutes",
+        ctaTitle: "Trouvons la prochaine étape pour toi en 5 Minutes",
         ctaDesc: "Tu repartiras en sachant exactement par où commencer avec l’IA. Pas de jargon, pas de devinettes.",
         step1: "Accède au Formulaire",
         step1Desc: "Choisis ta langue et lance directement l’évaluation.",
-        step2: "Sélectionne Tes Points de Douleur",
+        step2: "Sélectionne les réalités qui te freinent",
         step2Desc: "Coche les tâches chronophages qui freinent ton entreprise.",
         step3: "Reçois Tes Résultats",
         step3Desc: "Obtiens gratuitement par email ton plan IA personnalisé.",
         learnMore: "📖 Tu veux en savoir plus avant ?",
-        downloadGuide: "Télécharge le Guide Complet du Test d’Adéquation IA",
+        downloadGuide: "Télécharge le Guide Complet du AI Fit Test",
         chooseLanguage: "Choisis ta langue pour commencer :",
-        startTest: "🚀 Lance ton Test d’Adéquation IA",
-        noTracking: "Pas de suivi — nous stockons uniquement ta préférence de langue en local.",
+        startTest: "🚀 Lance ton AI Fit Test",
+        noTracking: "Pas de suivi - nous stockons uniquement ta préférence de langue en local.",
         cookies: "🍪 Nous utilisons des cookies",
         cookiesDesc: "Nous utilisons uniquement des cookies essentiels pour améliorer ton expérience. En continuant, tu acceptes leur usage.",
         accept: "Accepter",
         decline: "Refuser",
         privacy: "Confidentialité",
         contact: "Contact",
-        copyright: "© 2025 Make it SIMPL — Automatisation IA pour la Croissance des PME"
+        copyright: "© 2025 Make it SIMPL - Automatisation IA pour la Croissance des PME"
       }
     };
 
@@ -1247,9 +1251,9 @@
       updateElement('.cookie-decline', t.decline);
 
       // Update footer
-      updateElement('footer a[href="privacy.html"]', t.privacy);
-      updateElement('footer a[href^="mailto"]', t.contact);
-      updateElement('footer div:first-child', t.copyright);
+      updateElement('.footer-copy', t.copyright);
+      updateElement('.footer-privacy', t.privacy);
+      updateElement('.footer-contact', t.contact);
 
       // Update language switcher buttons
       document.querySelectorAll('.lang-btn').forEach(btn => {
