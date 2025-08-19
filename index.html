@@ -376,9 +376,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       margin: 32px 0;
-      display: flex;
-      justify-content: center;
-      /* centers all child divs horizontally */
       gap: 2rem;
       /* space between steps */
     }
@@ -754,6 +751,37 @@
       left: -200px;
       background: radial-gradient(circle, #22d3ee, #06b6d4, transparent 70%)
     }
+
+    .footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* subtle dot separator between links */
+.footer-links a + a::before {
+  content: "•";
+  margin: 0 8px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
   </style>
 </head>
 
@@ -1010,22 +1038,16 @@
       </div>
 
       <!-- Footer Links -->
-      <div class="footer-links"
-        style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
-        <a class="footer-privacy" href="privacy.html"
-          style="display:inline-block;color:#ffffff;background:linear-gradient(135deg,var(--accent),#3b82f6);text-decoration:none;padding:16px 32px;border-radius:12px;font-weight:700;font-size:18px;transition:all 0.3s ease;box-shadow:0 8px 24px rgba(96,165,250,0.4);border:2px solid transparent;min-width:180px;text-align:center;"
-          onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(96,165,250,0.5)';this.style.borderColor='#ffffff'"
-          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(96,165,250,0.4)';this.style.borderColor='transparent'">
-          📄 Privacy Policy
-        </a>
-        <a class="footer-contact" href="https://mail.google.com/mail/?view=cm&to=scott@makeitsimpl.ai"    target="_blank" rel="noopener"
-          style="display:inline-block;color:#ffffff;background:linear-gradient(135deg,var(--accent),#3b82f6);text-decoration:none;padding:16px 32px;border-radius:12px;font-weight:700;font-size:18px;transition:all 0.3s ease;box-shadow:0 8px 24px rgba(96,165,250,0.4);border:2px solid transparent;min-width:180px;text-align:center;"
-          onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(96,165,250,0.5)';this.style.borderColor='#ffffff'"
-          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(96,165,250,0.4)';this.style.borderColor='transparent'">
+      <div class="footer-links">
+        <a class="footer-privacy" href="privacy.html">📄 Privacy Policy</a>
+        <a class="footer-contact" href="https://mail.google.com/mail/?view=cm&to=scott@makeitsimpl.ai" target="_blank"
+          rel="noopener">
           ✉️ Contact Us
         </a>
       </div>
     </div>
+
+
 
     <!-- Mobile responsive layout -->
     <style>
