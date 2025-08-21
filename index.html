@@ -45,7 +45,8 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       line-height: 1.5;
       color: var(--text);
-      background: radial-gradient(1200px 600px at 70% -10%, #1b2a4a 0%, #0b1220 60%), var(--bg);
+      background: radial-gradient(ellipse 1400px 800px at 70% 0%, #1b2a4a 0%, #0b1220 50%), var(--bg);
+      background-attachment: fixed;
       overflow-x: hidden;
     }
 
@@ -82,7 +83,7 @@
     /* ===== Hero Section ===== */
     .hero {
       position: relative;
-      background: radial-gradient(1200px 600px at 70% -10%, #1b2a4a 0%, #0b1220 60%), var(--bg);
+      background: transparent;
       overflow: hidden;
     }
 
@@ -868,6 +869,77 @@
     </div>
   </section>
 
+  <!-- CTA Section (Duplicate) -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2 style="font-size:clamp(28px,3.5vw,36px);font-weight:900;margin:0 0 16px;color:#ffffff;">
+          Find your Best AI Move in 3 SIMPL Steps
+        </h2>
+        <p class="text-large text-muted mb-4">
+          You'll walk away knowing exactly where to start with AI, no tech jargon, no guesswork.
+        </p>
+
+        <!-- PDF Download Section -->
+        <div style="margin:32px 0 24px;">
+          <h3 style="color:#ffffff;margin:0 0 16px;text-align:center;">📖 Want to learn more first?</h3>
+          <p style="color:var(--muted);text-align:center;margin:0 0 20px;">Download the complete AI Fit Test Guide</p>
+
+          <div class="pdf-download-grid"
+            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 24px;">
+            <button class="pdf-btn" data-lang="en"
+              style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
+              <img class="flag-img" src="https://flagcdn.com/gb.svg" alt="GB" width="40" height="auto">
+              <div style="text-align:left;">
+                <div style="font-size:16px;">English PDF</div>
+                <div style="font-size:12px;color:var(--muted);">Download Guide</div>
+              </div>
+            </button>
+            <button class="pdf-btn" data-lang="fr"
+              style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.1));border:1px solid rgba(52,211,153,0.4);border-radius:16px;color:#ffffff;font-weight:700;cursor:pointer;transition:all .3s ease;font-family:inherit;">
+              <img class="flag-img" src="https://flagcdn.com/fr.svg" alt="FR" width="40" height="auto">
+              <div style="text-align:left;">
+                <div style="font-size:16px;">PDF Français</div>
+                <div style="font-size:12px;color:var(--muted);">Télécharger le Guide</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <h3 style="color:#ffffff;margin:32px 0 24px;">Choose your language to start:</h3>
+
+        <div class="lang-grid">
+          <button class="lang-option" data-lang="en" aria-label="Take test in English">
+            <img class="flag-img" src="https://flagcdn.com/gb.svg" alt="GB" width="40" height="auto">
+            <div class="lang-info">
+              <h4>English</h4>
+              <p>Take the AI Fit Test in English</p>
+            </div>
+          </button>
+          <button class="lang-option" data-lang="fr" aria-label="Passer le test en Français">
+            <img class="flag-img" src="https://flagcdn.com/fr.svg" alt="FR" width="40" height="auto">
+            <div class="lang-info">
+              <h4>Français</h4>
+              <p>Passer le AI Fit Test en français</p>
+            </div>
+          </button>
+        </div>
+
+        <div style="margin-top:32px;">
+          <button id="btn-continue-duplicate" class="btn btn-primary btn-large">
+            🚀 Start Your AI Fit Test
+          </button>
+        </div>
+
+        <div style="margin-top:24px;">
+          <p style="font-size:14px;color:var(--muted);margin:0;">
+            <span style="color:var(--success);">●</span> No tracking - we only store your language preference locally.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Problem Section -->
   <section class="section problem">
     <div class="container">
@@ -1138,7 +1210,7 @@
         problemDesc: "Endless tools, endless promises... This guide helps you cut through the noise to pinpoint your #1 automation opportunity. So you get clarity and return on investment, fast.",
         categoriesTitle: "Every AI system fits into one of these three categories:",
         categoriesSubtitle: "Let's prioritize for you...",
-        ctaTitle: "Find your Best AI Move in 5 Minutes",
+        ctaTitle: "Find your Best AI Move in 3 SIMPL Steps",
         ctaDesc: "You'll walk away knowing exactly where to start with AI, no tech jargon, no guesswork.",
         step1: "Access the Form",
         step1Desc: "Pick your language and jump straight into the assessment.",
@@ -1342,9 +1414,16 @@
         aiHeader.querySelector('.text-large')?.replaceChildren(document.createTextNode(t.categoriesSubtitle));
       }
 
-      // Update CTA section
-      updateElement('.cta-box h2', t.ctaTitle);
-      updateElement('.cta-box .text-large', t.ctaDesc);
+      // Update CTA sections (both instances)
+      const ctaTitles = document.querySelectorAll('.cta-box h2');
+      ctaTitles.forEach(title => {
+        title.textContent = t.ctaTitle;
+      });
+      
+      const ctaDescs = document.querySelectorAll('.cta-box .text-large');
+      ctaDescs.forEach(desc => {
+        desc.textContent = t.ctaDesc;
+      });
 
       // Update steps
       const steps = document.querySelectorAll('.cta-step h4');
@@ -1358,28 +1437,25 @@
         stepDescs[2].textContent = t.step3Desc;
       }
 
-      // Update other elements
+      // Update all CTA h3 elements (both sections)
       const ctaH3Elements = document.querySelectorAll('.cta-box h3');
-      if (ctaH3Elements.length >= 2) {
-        ctaH3Elements[0].textContent = t.learnMore;
-        ctaH3Elements[1].textContent = t.chooseLanguage;
-      }
+      ctaH3Elements.forEach(h3 => {
+        if (h3.textContent.includes('Want to learn') || h3.textContent.includes('Tu veux en savoir')) {
+          h3.textContent = t.learnMore;
+        } else if (h3.textContent.includes('Choose your language') || h3.textContent.includes('Choisis ta langue')) {
+          h3.textContent = t.chooseLanguage;
+        }
+      });
 
+      // Update all download guide paragraphs
       const ctaPElements = document.querySelectorAll('.cta-box p');
-      if (ctaPElements.length >= 2) {
-        // Find the download guide paragraph (should be the second one)
-        for (let i = 0; i < ctaPElements.length; i++) {
-          if (ctaPElements[i].textContent.includes('Download') || ctaPElements[i].textContent.includes('Téléchargez' | 'Télécharg/i')) {
-            ctaPElements[i].textContent = t.downloadGuide;
-            break;
-          }
+      ctaPElements.forEach(p => {
+        if (p.textContent.includes('Download the complete') || p.textContent.includes('Télécharge le Guide')) {
+          p.textContent = t.downloadGuide;
+        } else if (p.textContent.includes('No tracking') || p.textContent.includes('Pas de suivi')) {
+          p.innerHTML = `<span style="color:var(--success);">●</span> ${t.noTracking}`;
         }
-        // Update the last paragraph (no tracking)
-        const lastP = ctaPElements[ctaPElements.length - 1];
-        if (lastP) {
-          lastP.innerHTML = `<span style="color:var(--success);">●</span> ${t.noTracking}`;
-        }
-      }
+      });
 
       updateElement('#btn-continue', t.startTest);
 
@@ -1428,6 +1504,16 @@
         go(currentPageLang);
       });
 
+      // Setup duplicate CTA button
+      const btnDuplicate = document.getElementById("btn-continue-duplicate");
+      if (btnDuplicate) {
+        btnDuplicate.textContent = labels[preferred] || labels.en;
+        btnDuplicate.addEventListener('click', () => {
+          const currentPageLang = readPageLang() || getBrowserLang();
+          go(currentPageLang);
+        });
+      }
+
       // Initialize page language
       const savedPageLang = readPageLang() || getBrowserLang();
       switchLanguage(savedPageLang);
@@ -1437,9 +1523,13 @@
         btn.addEventListener('click', () => {
           const lang = btn.getAttribute('data-lang');
           switchLanguage(lang);
-          // Update main CTA button text when language switches
+          // Update both CTA button texts when language switches
           const mainBtn = document.getElementById("btn-continue");
+          const duplicateBtn = document.getElementById("btn-continue-duplicate");
           mainBtn.textContent = labels[lang] || labels.en;
+          if (duplicateBtn) {
+            duplicateBtn.textContent = labels[lang] || labels.en;
+          }
         });
       });
 
