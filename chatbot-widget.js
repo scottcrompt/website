@@ -1,17 +1,17 @@
 
 (function () {
-  // ======= Config =======
-  const config = window.chatbotConfig || {};
-  const apiUrl = config.apiUrl || "https://makeitsimpl.app.n8n.cloud/webhook/chat";
-  const websiteUrl = config.websiteUrl || "unknown-site";
-  const headers = {
-    "Content-Type": "application/json",
-    ...(config.headers || {}),
-  };
+    // ======= Config =======
+    const config = window.chatbotConfig || {};
+    const apiUrl = config.apiUrl || "https://makeitsimpl.app.n8n.cloud/webhook/chat";
+    const websiteUrl = config.websiteUrl || "unknown-site";
+    const headers = {
+        "Content-Type": "application/json",
+        ...(config.headers || {}),
+    };
 
-  // ======= Styles =======
-  const style = document.createElement("style");
-  style.innerHTML = `
+    // ======= Styles =======
+    const style = document.createElement("style");
+    style.innerHTML = `
     :root {
       --cb-black: #111;
       --cb-white: #fff;
@@ -205,138 +205,140 @@
       .cb-button { right: 12px; bottom: 12px; }
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
 
-  // ======= Button with Robot SVG =======
-  const button = document.createElement("button");
-  button.className = "cb-button";
-  button.setAttribute("aria-label", "Open chat");
-  button.innerHTML = `
+    // ======= Button with Robot SVG =======
+    const button = document.createElement("button");
+    button.className = "cb-button";
+    button.setAttribute("aria-label", "Open chat");
+    button.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M12 2a1 1 0 0 0-1 1v1.07A8.002 8.002 0 0 0 4 12v6a2 2 0 0 0 2 2h1v2h2v-2h6v2h2v-2h1a2 2 0 0 0 2-2v-6a8.002 8.002 0 0 0-7-7.93V3a1 1 0 0 0-1-1zm0 4a6 6 0 0 1 6 6v6H6v-6a6 6 0 0 1 6-6zm-2 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
     </svg>
   `;
-  document.body.appendChild(button);
+    document.body.appendChild(button);
 
-  // ======= Window =======
-  const chatWindow = document.createElement("section");
-  chatWindow.className = "cb-window";
-  chatWindow.setAttribute("role", "dialog");
-  chatWindow.setAttribute("aria-label", "Chat widget");
+    // ======= Window =======
+    const chatWindow = document.createElement("section");
+    chatWindow.className = "cb-window";
+    chatWindow.setAttribute("role", "dialog");
+    chatWindow.setAttribute("aria-label", "Chat widget");
 
-  const header = document.createElement("header");
-  header.className = "cb-header";
-  const title = document.createElement("div");
-  title.className = "cb-title";
-  title.textContent = (config.title || "Chat with us").toUpperCase();
-  const closeBtn = document.createElement("button");
-  closeBtn.className = "cb-close";
-  closeBtn.setAttribute("aria-label", "Close");
-  closeBtn.innerHTML = "✕";
-  header.appendChild(title);
-  header.appendChild(closeBtn);
+    const header = document.createElement("header");
+    header.className = "cb-header";
+    const title = document.createElement("div");
+    title.className = "cb-title";
+    title.textContent = (config.title || "Chat with us").toUpperCase();
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "cb-close";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.innerHTML = "✕";
+    header.appendChild(title);
+    header.appendChild(closeBtn);
 
-  const messages = document.createElement("div");
-  messages.className = "cb-messages";
+    const messages = document.createElement("div");
+    messages.className = "cb-messages";
 
-  const inputWrap = document.createElement("div");
-  inputWrap.className = "cb-input";
-  const input = document.createElement("input");
-  input.type = "text";
-  input.className = "cb-text";
-  input.placeholder = "Ask me anything…";
-  const sendBtn = document.createElement("button");
-  sendBtn.className = "cb-send";
-  sendBtn.textContent = "Send";
-  inputWrap.appendChild(input);
-  inputWrap.appendChild(sendBtn);
+    const inputWrap = document.createElement("div");
+    inputWrap.className = "cb-input";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "cb-text";
+    input.placeholder = "Ask me anything…";
+    const sendBtn = document.createElement("button");
+    sendBtn.className = "cb-send";
+    sendBtn.textContent = "Send";
+    inputWrap.appendChild(input);
+    inputWrap.appendChild(sendBtn);
 
-  chatWindow.appendChild(header);
-  chatWindow.appendChild(messages);
-  chatWindow.appendChild(inputWrap);
-  document.body.appendChild(chatWindow);
+    chatWindow.appendChild(header);
+    chatWindow.appendChild(messages);
+    chatWindow.appendChild(inputWrap);
+    document.body.appendChild(chatWindow);
 
-  // ======= Open / Close =======
-  const toggle = (forceOpen) => {
-    const willOpen = forceOpen ?? !chatWindow.classList.contains("cb-open");
-    if (willOpen) chatWindow.classList.add("cb-open");
-    else chatWindow.classList.remove("cb-open");
-  };
-  button.onclick = () => toggle(true);
-  closeBtn.onclick = () => toggle(false);
+    // ======= Open / Close =======
+    const toggle = (forceOpen) => {
+        const willOpen = forceOpen ?? !chatWindow.classList.contains("cb-open");
+        if (willOpen) chatWindow.classList.add("cb-open");
+        else chatWindow.classList.remove("cb-open");
+    };
+    button.onclick = () => toggle(true);
+    closeBtn.onclick = () => toggle(false);
 
-  // ======= Message helpers =======
-  function addBubble(sender, text, extraClass = "") {
-    const row = document.createElement("div");
-    row.className = `cb-row cb-${sender}`;
-    const bubble = document.createElement("div");
-    bubble.className = `cb-bubble ${extraClass}`.trim();
-    bubble.textContent = text;
-    row.appendChild(bubble);
-    messages.appendChild(row);
-    messages.scrollTop = messages.scrollHeight;
-    return row;
-  }
-
-  function addTyping() {
-    const row = document.createElement("div");
-    row.className = "cb-row cb-bot";
-    const wrap = document.createElement("div");
-    wrap.className = "cb-typing";
-    wrap.innerHTML = `<span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span>`;
-    row.appendChild(wrap);
-    messages.appendChild(row);
-    messages.scrollTop = messages.scrollHeight;
-    return row;
-  }
-
-  // ======= Send logic =======
-  let sending = false;
-
-async function sendMessage(message) {
-  if (!message) return;
-  
-  // Show user bubble
-  addBubble("user", message);
-  input.value = "";
-
-  // Typing indicator
-  const typingRow = addTyping();
-
-  try {
-    const response = await fetch(config.apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(config.headers || {})
-      },
-      body: JSON.stringify({
-        websiteUrl: config.websiteUrl,
-        message: message
-      })
-    });
-
-    const data = await response.json();
-    typingRow.remove();
-
-    if (data.answer) {
-      addBubble("bot", data.answer);
-    } else {
-      addBubble("bot", "⚠️ No response received");
+    // ======= Message helpers =======
+    function addBubble(sender, text, extraClass = "") {
+        const row = document.createElement("div");
+        row.className = `cb-row cb-${sender}`;
+        const bubble = document.createElement("div");
+        bubble.className = `cb-bubble ${extraClass}`.trim();
+        bubble.textContent = text;
+        row.appendChild(bubble);
+        messages.appendChild(row);
+        messages.scrollTop = messages.scrollHeight;
+        return row;
     }
 
-  } catch (err) {
-    typingRow.remove();
-    addBubble("bot", "⚠️ Error: " + err.message, "cb-error");
-  }
-}
+    function addTyping() {
+        const row = document.createElement("div");
+        row.className = "cb-row cb-bot";
+        const wrap = document.createElement("div");
+        wrap.className = "cb-typing";
+        wrap.innerHTML = `<span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span>`;
+        row.appendChild(wrap);
+        messages.appendChild(row);
+        messages.scrollTop = messages.scrollHeight;
+        return row;
+    }
+
+    // ======= Send logic =======
+    let sending = false;
+
+    async function sendMessage(message) {
+        if (!message) return;
+
+        // Show user bubble
+        addBubble("user", message);
+        input.value = "";
+
+        // Typing indicator
+        const typingRow = addTyping();
+
+        try {
+            const response = await fetch(config.apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(config.headers || {})
+                },
+                body: JSON.stringify({
+                    query: {
+                        website_url: config.websiteUrl,
+                        message: message
+                    }
+                })
+            });
+
+            const data = await response.json();
+            typingRow.remove();
+
+            if (data.answer) {
+                addBubble("bot", data.answer);
+            } else {
+                addBubble("bot", "⚠️ No response received");
+            }
+
+        } catch (err) {
+            typingRow.remove();
+            addBubble("bot", "⚠️ Error: " + err.message, "cb-error");
+        }
+    }
 
 
-// Hook up button + Enter key
-sendBtn.onclick = () => sendMessage(input.value.trim());
-input.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage(input.value.trim());
-});
+    // Hook up button + Enter key
+    sendBtn.onclick = () => sendMessage(input.value.trim());
+    input.addEventListener("keypress", e => {
+        if (e.key === "Enter") sendMessage(input.value.trim());
+    });
 
 })();
 
