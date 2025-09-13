@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DARK SUGARS COCOA HOUSE — Artisan handcrafted chocolates, truffles, and vegan treats.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="description" content="Dark Sugars - Artisan handcrafted chocolates, truffles, and vegan treats.">
+  <meta name="theme-color" content="#0e0b09">
+  <link rel="icon" href="https://www.darksugars.co.uk/cdn/shop/t/13/assets/favicon-32x32.png?v=132113732595502904711698948461" sizes="32x32">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap');
+
+    :root{
+      --accent:#ffffff;
+      --bg:#0e0b09;
+      --bg-elev:#18110e;
+      --text:#f5f2ef;
+      --muted:#cfbfb7;
+      --line:rgba(255,255,255,0.1);
+      --shadow:0 20px 40px rgba(0,0,0,0.5);
+      --radius:16px;
+      --radius-sm:12px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #3a241b 0%, transparent 40%),
+        radial-gradient(1000px 700px at 110% 10%, #2b1c16 0%, transparent 35%),
+        linear-gradient(#1a120e, #0e0b09 65%);
+      color:var(--text);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    .container{max-width:1160px;margin:0 auto;padding:0 24px}
+
+    .site-header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(12,9,7,0.6);
+      backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      height:72px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;
+      font-family:Poppins, Inter, Arial, sans-serif;
+    }
+    .brand img{width:32px;height:32px}
+    .brand .title{
+      display:flex;flex-direction:column;line-height:1.1
+    }
+    .brand .name{font-weight:700;letter-spacing:.6px;font-size:15px}
+    .brand .tag{font-weight:500;font-size:11px;opacity:.85}
+
+    .nav-links{
+      display:flex;align-items:center;gap:24px;
+    }
+    .nav-links a{
+      font-weight:500;font-size:14px;opacity:.9;padding:8px 4px;border-bottom:2px solid transparent;transition:opacity .2s ease, border-color .2s ease
+    }
+    .nav-links a:hover,
+    .nav-links a:focus{opacity:1;border-color:var(--accent);outline:none}
+
+    .btn{
+      --x:50%;
+      --y:50%;
+      position:relative;
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:10px;
+      padding:14px 20px;
+      background:var(--accent);
+      color:#151312;
+      border:none;border-radius:999px;
+      font-weight:600;font-size:15px;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+      box-shadow:0 8px 24px rgba(255,255,255,0.06);
+      isolation:isolate;
+      overflow:hidden;
+    }
+    .btn:before{
+      content:"";
+      position:absolute;inset:-1px;
+      background:radial-gradient(180px 180px at var(--x) var(--y), rgba(255,255,255,0.35), transparent 55%);
+      opacity:0;transition:opacity .25s ease;
+      pointer-events:none;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(0,0,0,0.45)}
+    .btn:hover:before{opacity:1}
+    .btn:active{transform:translateY(0)}
+    .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+    .btn-ghost{
+      background:transparent;color:var(--accent);border:1.5px solid var(--accent)
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,0.06)}
+    .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+
+    .menu-toggle{
+      display:none;gap:8px;flex-direction:column;justify-content:center;align-items:center;
+      width:42px;height:42px;border-radius:10px;border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);cursor:pointer
+    }
+    .menu-toggle span{
+      width:20px;height:2px;background:var(--accent);transition:transform .25s ease, opacity .25s ease
+    }
+    .menu-open .menu-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+    .menu-open .menu-toggle span:nth-child(2){opacity:0}
+    .menu-open .menu-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+    @media (max-width: 980px){
+      .menu-toggle{display:flex}
+      .nav-links{
+        position:fixed;inset:72px 0 auto 0;
+        background:rgba(10,8,7,0.95);
+        backdrop-filter:saturate(140%) blur(8px);
+        border-bottom:1px solid var(--line);
+        padding:18px 24px;
+        display:grid;grid-template-columns:1fr;gap:6px;
+        transform:translateY(-120%);transition:transform .3s ease;
+      }
+      .menu-open .nav-links{transform:translateY(0)}
+      .nav-links .btn{justify-self:start}
+    }
+
+    .hero{
+      position:relative;overflow:hidden
+    }
+    .hero .wrap{
+      padding:96px 0 64px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center
+    }
+    .hero-copy{
+      position:relative;padding:24px;border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow)
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#e8e0da;
+      opacity:.9;margin-bottom:14px
+    }
+    .eyebrow:before{
+      content:"";width:26px;height:2px;background:var(--accent);border-radius:2px;opacity:.9
+    }
+    h1{
+      font-family:Poppins, Inter, Arial, sans-serif;
+      font-weight:700;
+      font-size:clamp(28px, 4.5vw, 52px);
+      line-height:1.08;
+      margin:6px 0 12px;
+      letter-spacing:.4px
+    }
+    .tagline{font-size:clamp(14px, 1.8vw, 18px);color:var(--muted);margin:0 0 22px}
+    .hero-media{
+      align-self:stretch;display:grid;place-items:center
+    }
+    .hero-card{
+      width:100%;aspect-ratio:4/3;max-height:460px;border-radius:var(--radius);
+      background:
+        radial-gradient(200px 140px at 30% 25%, rgba(255,255,255,0.08), transparent 60%),
+        linear-gradient(145deg, #322018, #1c1411 55%);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      position:relative;overflow:hidden
+    }
+    .hero-card:after{
+      content:"";
+      position:absolute;inset:auto -20% -20% -20%;
+      height:65%;background:radial-gradient(80% 140% at 50% 100%, rgba(255,255,255,0.06), transparent 60%)
+    }
+    .hero-badges{
+      position:absolute;bottom:16px;left:16px;display:flex;gap:10px;flex-wrap:wrap
+    }
+    .badge{
+      font-size:12px;color:#0f0c0a;background:var(--accent);padding:8px 10px;border-radius:999px;font-weight:700;letter-spacing:.4px
+    }
+
+    .section{
+      padding:64px 0
+    }
+    .features{
+      display:grid;grid-template-columns:repeat(4, 1fr);gap:18px
+    }
+    .feature{
+      background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border:1px solid var(--line);border-radius:var(--radius-sm);
+      padding:20px;min-height:170px;display:grid;gap:12px;transition:transform .2s ease, box-shadow .2s ease
+    }
+    .feature:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .feature svg{width:28px;height:28px;color:var(--accent)}
+    .feature h3{margin:2px 0 6px;font-family:Poppins, Inter, Arial, sans-serif;font-weight:600;font-size:18px}
+    .feature p{margin:0;color:var(--muted);font-size:14px}
+
+    .categories{
+      display:grid;grid-template-columns:repeat(4, 1fr);gap:18px
+    }
+    .card{
+      position:relative;overflow:hidden;border-radius:18px;min-height:200px;
+      display:flex;align-items:flex-end;padding:18px;border:1px solid var(--line);
+      background:linear-gradient(160deg, #2e1d17, #1a120f 60%);
+      transition:transform .25s ease, box-shadow .25s ease
+    }
+    .card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow)}
+    .card:before{
+      content:"";position:absolute;inset:0;background:
+        radial-gradient(220px 140px at 70% 20%, rgba(255,255,255,0.09), transparent 60%),
+        radial-gradient(260px 160px at -10% 110%, rgba(255,255,255,0.03), transparent 60%);
+      mix-blend:screen
+    }
+    .card .label{
+      position:relative;z-index:1;
+      background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);
+      color:var(--accent);padding:10px 12px;border-radius:12px;font-weight:600
+    }
+    .card .corner{
+      position:absolute;top:12px;right:12px;
+      color:#0f0c0a;background:var(--accent);border-radius:999px;font-weight:700;font-size:11px;padding:8px 10px
+    }
+
+    .section-head{
+      display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;gap:12px
+    }
+    .section-head h2{
+      font-family:Poppins, Inter, Arial, sans-serif;
+      font-size:24px;font-weight:700;margin:0;letter-spacing:.3px
+    }
+    .section-head p{margin:0;color:var(--muted);font-size:14px}
+
+    .divider{
+      height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      margin:28px 0
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:38px 0 90px
+    }
+    .footer-grid{
+      display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px
+    }
+    .foot-brand{
+      display:flex;gap:12px;align-items:flex-start
+    }
+    .foot-brand img{width:36px;height:36px}
+    .foot-brand strong{font-family:Poppins, Inter, Arial, sans-serif;font-size:15px;display:block}
+    .foot-muted{color:var(--muted);font-size:14px;margin-top:8px}
+    .foot-links{
+      display:grid;align-content:start;gap:8px
+    }
+    .foot-links a{
+      font-size:14px;opacity:.9
+    }
+    .foot-links a:hover{opacity:1;text-decoration:underline}
+    .copyright{
+      margin-top:22px;font-size:12px;color:var(--muted);opacity:.9
+    }
+
+    @media (max-width:1024px){
+      .hero .wrap{grid-template-columns:1fr}
+      .categories{grid-template-columns:repeat(2, 1fr)}
+      .features{grid-template-columns:repeat(2, 1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:640px){
+      .categories{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}
+      .hero .wrap{padding:72px 0 48px}
+      .btn{width:100%}
+      .btn-row{gap:10px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="brand">
+        <img src="https://www.darksugars.co.uk/cdn/shop/t/13/assets/favicon-32x32.png?v=132113732595502904711698948461" alt="DARK SUGARS logo">
+        <div class="title">
+          <span class="name">DARK SUGARS COCOA HOUSE</span>
+          <span class="tag">Artisan chocolates & vegan treats</span>
+        </div>
+      </a>
+      <nav class="nav-links" id="nav">
+        <a href="#about">About</a>
+        <a href="#treats">Treats</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-ghost" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener">Shop Collections</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container wrap">
+        <div class="hero-copy">
+          <div class="eyebrow">DARK SUGARS COCOA HOUSE</div>
+          <h1>Dark Sugars — Artisan handcrafted chocolates, truffles, and vegan treats.</h1>
+          <p class="tagline">Indulge in ethically-sourced cocoa, rolled and tempered by hand. Classic to vegan, every bite celebrates depth, texture, and pure cocoa bliss.</p>
+          <div class="btn-row">
+            <a class="btn" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener">Explore Collections</a>
+            <a class="btn btn-ghost" href="#about">Our Story</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="hero-card">
+            <div class="hero-badges">
+              <span class="badge">Handcrafted</span>
+              <span class="badge">Vegan Options</span>
+              <span class="badge">Small Batch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>About & Features</h2>
+          <p>Crafted with precision. Finished with heart. Served with joy.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 3l2.4 4.86 5.36.78-3.88 3.78.92 5.35L12 15.9l-4.8 2.87.92-5.35L4.24 8.64l5.36-.78L12 3z"/>
+            </svg>
+            <h3>Artisan Quality</h3>
+            <p>Every truffle is rolled, dipped, and finished by hand for a truly luxurious texture.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v20M4 8h8M4 16h8"/>
+              <circle cx="17.5" cy="6.5" r="3.5"/>
+            </svg>
+            <h3>Ethical Cocoa</h3>
+            <p>Sourced with care to highlight terroir and sustain farming communities.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="7" width="18" height="13" rx="3"/>
+              <path d="M7 7V5a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2"/>
+            </svg>
+            <h3>Vegan Delights</h3>
+            <p>Plant-based options with the same rich snap, gloss, and melt-in-mouth finish.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 20h16M5 20l1.5-10.5A3 3 0 0 1 9.48 7h5.04A3 3 0 0 1 17.5 9.5L19 20"/>
+              <path d="M9 7V5a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v2"/>
+            </svg>
+            <h3>Small Batch</h3>
+            <p>Limited runs to preserve freshness, aroma, and nuanced flavor profiles.</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-head">
+          <h2>Trending Collections</h2>
+          <p>Discover signature treats, classic assortments, and seasonal drops.</p>
+        </div>
+
+        <div id="treats" class="categories">
+          <a class="card" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener">
+            <span class="corner">New</span>
+            <span class="label">Artisan Chocolates</span>
+          </a>
+          <a class="card" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener" style="background:linear-gradient(160deg, #3a241b, #1b1310 60%)">
+            <span class="corner">Classic</span>
+            <span class="label">Silky Truffles</span>
+          </a>
+          <a class="card" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener" style="background:linear-gradient(160deg, #2f221c, #1a1411 60%)">
+            <span class="corner">Vegan</span>
+            <span class="label">Vegan Treats</span>
+          </a>
+          <a class="card" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener" style="background:linear-gradient(160deg, #36231b, #18100e 60%)">
+            <span class="corner">Cozy</span>
+            <span class="label">Hot Cocoa & Sips</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Visit & Connect</h2>
+          <p>Have a craving or a question? We’re here for the sweet moments.</p>
+        </div>
+        <div class="features">
+          <div class="feature">
+            <h3>Questions</h3>
+            <p>Tap the chat widget below for quick help and product recommendations.</p>
+          </div>
+          <div class="feature">
+            <h3>Shop Online</h3>
+            <p>Order your favorite assortments and gifts for delivery.</p>
+            <div class="btn-row" style="margin-top:8px">
+              <a class="btn btn-ghost" href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener">Browse Collections</a>
+            </div>
+          </div>
+          <div class="feature">
+            <h3>Fresh Drops</h3>
+            <p>Seasonal flavors rotate frequently—check back for limited editions.</p>
+          </div>
+          <div class="feature">
+            <h3>Allergy Info</h3>
+            <p>Vegan and dairy-free options available. Ingredient info on product pages.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="foot-brand">
+          <img src="https://www.darksugars.co.uk/cdn/shop/t/13/assets/favicon-32x32.png?v=132113732595502904711698948461" alt="DARK SUGARS icon">
+          <div>
+            <strong>DARK SUGARS COCOA HOUSE</strong>
+            <div class="foot-muted">Dark Sugars - Artisan handcrafted chocolates, truffles, and vegan treats.</div>
+          </div>
+        </div>
+        <div class="copyright">© <span id="year"></span> Dark Sugars Cocoa House. All rights reserved.</div>
+      </div>
+      <div class="foot-links">
+        <strong style="font-family:Poppins, Inter, Arial, sans-serif;font-size:14px">Explore</strong>
+        <a href="#about">About</a>
+        <a href="#treats">Treats</a>
+        <a href="https://www.darksugars.co.uk/collections" target="_blank" rel="noopener">Shop Collections</a>
+      </div>
+      <div class="foot-links">
+        <strong style="font-family:Poppins, Inter, Arial, sans-serif;font-size:14px">Connect</strong>
+        <a href="#contact">Contact</a>
+        <a href="https://www.darksugars.co.uk/" target="_blank" rel="noopener">Website</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    const yearEl = document.getElementById('year');
+
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = body.classList.toggle('menu-open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+      nav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          if (window.innerWidth <= 980) {
+            body.classList.remove('menu-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (body.classList.contains('menu-open') && !e.target.closest('#nav') && !e.target.closest('#menuToggle')) {
+        body.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && body.classList.contains('menu-open')) {
+        body.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', function(e){
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+
+    const btns = document.querySelectorAll('.btn');
+    btns.forEach(btn => {
+      btn.addEventListener('pointermove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        btn.style.setProperty('--x', x + 'px');
+        btn.style.setProperty('--y', y + 'px');
+      });
+    });
+  </script>
+
+  <script>
+  window.chatbotConfig = {
+    apiUrl: "https://makeitsimpl.app.n8n.cloud/webhook/chat",
+    websiteUrl: "https://www.darksugars.co.uk/collections",
+    headers: {
+      "Authorization": "Basic Y2hhdGJvdDppbG92ZWNoYXRib3RzITEyMzQ="
+    }
+  };
+  </script>
+  <script src="https://makeitsimpl.ai/chatbot-widget.js"></script>
+</body>
+</html>
