@@ -307,7 +307,8 @@ async function sendMessage(message) {
     const response = await fetch(config.apiUrl, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...(config.headers || {})
       },
       body: JSON.stringify({
         websiteUrl: config.websiteUrl,
