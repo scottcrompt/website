@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Trustpilot Custom Widget — Join the UK's No.1 Craft Beer Club</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://dth50iqs19w2y.cloudfront.net/static/favicon/favicon-32x32.png" sizes="32x32">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+    :root{
+      --bg:#0b0f1a;
+      --bg-2:#0e1424;
+      --text:#e8ecf3;
+      --muted:#a3adbd;
+      --accent:#ffffff;
+      --accent-contrast:#0b0f1a;
+      --card:rgba(255,255,255,0.06);
+      --card-2:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius:14px;
+      --container:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{
+      scroll-behavior:smooth;
+    }
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, #1a2450 0%, transparent 60%),
+                  radial-gradient(1000px 700px at -10% 10%, #17213f 0%, transparent 55%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      line-height:1.6;
+    }
+
+    img{max-width:100%; display:block}
+
+    .container{
+      width: min(calc(100% - 40px), var(--container));
+      margin-inline:auto;
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(180deg, rgba(11,15,26,0.85), rgba(11,15,26,0.65));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:800; letter-spacing:0.2px;
+    }
+    .brand img{width:32px; height:32px}
+    .brand span{font-size:1rem}
+
+    .menu{
+      display:flex; align-items:center; gap:28px;
+    }
+    .menu a{
+      color:var(--muted); font-weight:600; font-size:0.95rem;
+      padding:8px 2px; border-bottom:2px solid transparent; transition:color .2s, border-color .2s;
+    }
+    .menu a:hover{color:var(--text); border-color:var(--accent)}
+
+    .actions{
+      display:flex; align-items:center; gap:12px;
+    }
+
+    .btn{
+      position:relative;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 18px; border-radius:999px;
+      border:1px solid var(--border);
+      font-weight:700; letter-spacing:.2px; cursor:pointer;
+      transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+      overflow:hidden;
+      will-change:transform;
+    }
+    .btn:active{transform:scale(.98)}
+    .btn-primary{
+      background:var(--accent);
+      color:var(--accent-contrast);
+      border-color:transparent;
+      box-shadow:0 8px 24px rgba(255,255,255,0.08);
+    }
+    .btn-primary:hover{box-shadow:0 10px 28px rgba(255,255,255,0.14)}
+    .btn-ghost{
+      background:transparent;
+      color:var(--text);
+    }
+    .btn .sheen{
+      position:absolute; inset:-40%;
+      background: radial-gradient(160px 160px at var(--x,50%) var(--y,50%), rgba(255,255,255,0.35), transparent 45%);
+      opacity:0; transition:opacity .25s ease;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    .btn.hovering .sheen{opacity:.9}
+
+    /* Mobile nav */
+    .burger{
+      display:none; width:44px; height:44px; border-radius:10px;
+      border:1px solid var(--border); background:transparent; color:var(--text);
+    }
+    .burger svg{width:22px; height:22px}
+    @media (max-width: 900px){
+      .menu{display:none}
+      .actions{display:none}
+      .burger{display:inline-flex; align-items:center; justify-content:center}
+      .nav.open .menu,
+      .nav.open .actions{
+        display:flex;
+        position:absolute; left:20px; right:20px; top:64px;
+        flex-direction:column; gap:10px; padding:14px;
+        background:linear-gradient(180deg, rgba(18,24,44,.95), rgba(12,16,31,.95));
+        border:1px solid var(--border);
+        border-radius:14px;
+        box-shadow:var(--shadow);
+      }
+      .nav.open .actions{top: unset; margin-top:122px}
+      .nav.open .menu a{padding:10px 8px}
+    }
+
+    /* Hero */
+    .hero{
+      position:relative;
+      padding: clamp(60px, 10vw, 110px) 0 70px;
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid; gap:40px;
+      grid-template-columns: 1.2fr 1fr;
+      align-items:center;
+    }
+    @media (max-width: 1000px){ .hero-grid{grid-template-columns:1fr} }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 12px; border-radius:999px;
+      background: var(--card);
+      border:1px solid var(--border);
+      color:var(--muted); font-weight:600; font-size:.9rem;
+    }
+    .title{
+      margin:16px 0 10px;
+      font-family:"Playfair Display", serif;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height:1.08;
+      letter-spacing:.2px;
+    }
+    .tagline{
+      color:var(--muted);
+      font-size: clamp(16px, 2.2vw, 18px);
+      margin-bottom:26px;
+      max-width:680px;
+    }
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap}
+
+    .hero-card{
+      background:linear-gradient(180deg, var(--card), var(--card-2));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      display:grid; gap:14px;
+    }
+    .stars{display:flex; align-items:center; gap:10px}
+    .stars svg{width:18px; height:18px; fill:var(--accent)}
+    .metric{
+      display:flex; align-items:baseline; gap:10px;
+    }
+    .metric .value{font-size:32px; font-weight:800}
+    .metric .label{color:var(--muted)}
+
+    .hero-visual{
+      position:relative;
+      background: radial-gradient(300px 300px at 70% 20%, rgba(255,255,255,0.08), transparent 50%),
+                  linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow: var(--shadow);
+    }
+    .visual-inner{
+      display:grid; gap:16px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .chip{
+      background: rgba(255,255,255,0.075);
+      border:1px solid var(--border);
+      border-radius:12px; padding:12px;
+      font-size:.9rem; color:var(--text);
+    }
+
+    /* Sections */
+    section{padding:70px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:20px;
+      margin-bottom:26px;
+    }
+    .section-title h2{
+      margin:0; font-size: clamp(26px, 3.2vw, 36px);
+      font-family:"Playfair Display", serif;
+    }
+    .section-title p{margin:0; color:var(--muted)}
+
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .col-4{grid-column: span 4}
+    .col-6{grid-column: span 6}
+    .col-12{grid-column: span 12}
+    @media (max-width: 1000px){
+      .col-6, .col-4{grid-column: span 12}
+    }
+    .card{
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:22px;
+      height:100%;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: rgba(255,255,255,0.22);
+    }
+    .card h3{margin:0 0 8px; font-size:1.25rem}
+    .card p{margin:0; color:var(--muted)}
+    .icon{
+      width:40px; height:40px; border-radius:10px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background: var(--accent); color: var(--accent-contrast);
+      box-shadow:0 8px 24px rgba(255,255,255,0.12);
+      margin-bottom:10px;
+    }
+
+    .cta-band{
+      margin-top:24px;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-radius: var(--radius);
+      padding:24px;
+      display:flex; flex-wrap:wrap; align-items:center; gap:16px; justify-content:space-between;
+      border:1px solid rgba(0,0,0,0.08);
+    }
+    .cta-band .btn-primary{
+      background: var(--accent-contrast);
+      color: var(--accent);
+      border-color: rgba(0,0,0,0.2);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    }
+    .cta-band .btn-ghost{
+      background: transparent;
+      color: var(--accent-contrast);
+      border-color: rgba(0,0,0,0.22);
+    }
+
+    /* Footer */
+    footer{
+      padding:36px 0 110px;
+      border-top:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    }
+    .foot-grid{
+      display:grid; gap:18px; grid-template-columns: 1.2fr 1fr 1fr;
+    }
+    @media (max-width:900px){ .foot-grid{grid-template-columns:1fr} }
+    .foot-brand{display:flex; align-items:center; gap:12px}
+    .foot-brand img{width:28px; height:28px}
+    .foot-nav{display:grid; gap:10px}
+    .foot-nav a{color:var(--muted)}
+    .foot-nav a:hover{color:var(--text)}
+    .legal{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; margin-top:22px; color:var(--muted); font-size:.95rem;
+    }
+    .social{display:flex; gap:12px}
+    .social a{
+      width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center;
+      border-radius:999px; border:1px solid var(--border); background:transparent;
+    }
+    .social a:hover{background:var(--card)}
+
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .btn{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="home">
+    <div class="container">
+      <div class="nav" id="nav">
+        <a href="#home" class="brand">
+          <img src="https://dth50iqs19w2y.cloudfront.net/static/favicon/favicon-32x32.png" alt="Trustpilot Custom Widget logo">
+          <span>Trustpilot Custom Widget</span>
+        </a>
+        <nav class="menu" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="actions">
+          <a class="btn btn-ghost" href="#features"><span>Learn more</span><span class="sheen"></span></a>
+          <a class="btn btn-primary" href="#join"><span>Join now</span><span class="sheen"></span></a>
+        </div>
+        <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">
+            <img src="https://dth50iqs19w2y.cloudfront.net/static/favicon/favicon-32x32.png" alt="" width="18" height="18" style="border-radius:4px">
+            Trusted by UK beer lovers
+          </span>
+          <h1 class="title">Join the UK's No.1 Craft Beer Club</h1>
+          <p class="tagline">Hand selected, small-batch brews delivered to your door! Discover new breweries every month, supported by ratings you can trust.</p>
+          <div class="cta-row">
+            <a href="#join" class="btn btn-primary"><span>Get started</span><span class="sheen"></span></a>
+            <a href="#features" class="btn btn-ghost"><span>See features</span><span class="sheen"></span></a>
+          </div>
+
+          <div class="hero-card" style="margin-top:22px">
+            <div class="stars" aria-label="Average rating: 4.8 out of 5">
+              <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.402 8.174L12 18.897l-7.336 3.873 1.402-8.174L.132 9.21l8.2-1.192L12 .587z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.402 8.174L12 18.897l-7.336 3.873 1.402-8.174L.132 9.21l8.2-1.192L12 .587z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.402 8.174L12 18.897l-7.336 3.873 1.402-8.174L.132 9.21l8.2-1.192L12 .587z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.402 8.174L12 18.897l-7.336 3.873 1.402-8.174L.132 9.21l8.2-1.192L12 .587z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.402 8.174L12 18.897l-7.336 3.873 1.402-8.174L.132 9.21l8.2-1.192L12 .587z"/></svg>
+              <strong style="margin-left:8px">4.8/5</strong>
+              <span style="color:var(--muted)">from 12,500+ members</span>
+            </div>
+            <div class="metric">
+              <div class="value">Small-batch</div>
+              <div class="label">curated cases, delivered monthly</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-inner">
+            <div class="chip">• Fresh drops weekly</div>
+            <div class="chip">• Member-only brews</div>
+            <div class="chip">• Cancel anytime</div>
+            <div class="chip">• Free magazine</div>
+          </div>
+          <div class="card" style="margin-top:18px">
+            <h3 style="margin:0 0 6px">Live trust signal</h3>
+            <p style="color:var(--muted); margin:0 0 12px">Real-time rating widget tailored to your brand.</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap">
+              <span class="eyebrow" style="padding:6px 10px">Verified reviews</span>
+              <span class="eyebrow" style="padding:6px 10px">Auto-updates</span>
+              <span class="eyebrow" style="padding:6px 10px">Embeddable</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>About the Club</h2>
+          <p>Curated craft beer, transparent ratings, zero fuss.</p>
+        </div>
+        <div class="grid">
+          <div class="col-6">
+            <div class="card">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.1L18 21l-6-4-6 4 1.5-7.9L2 9h7z"/></svg>
+              </div>
+              <h3>Curated by experts</h3>
+              <p>Every case is hand-picked from small-batch breweries across the UK and beyond—discover styles you’ll love, guided by trusted member ratings.</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 4v5l4 2"/></svg>
+              </div>
+              <h3>Flexible by design</h3>
+              <p>Pause, skip, or cancel anytime. You’re always in control—no hidden fees, just great beer on your terms.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cta-band" id="join">
+          <div>
+            <strong style="font-size:1.1rem">Ready for your first case?</strong>
+            <div style="opacity:.8">Join today and unlock member-only brews, perks, and honest ratings.</div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn btn-primary" href="#contact"><span>Claim your spot</span><span class="sheen"></span></a>
+            <a class="btn btn-ghost" href="#features"><span>Explore features</span><span class="sheen"></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>Features that build trust</h2>
+          <p>Showcase social proof and keep members informed.</p>
+        </div>
+        <div class="grid">
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2l9 4-9 4-9-4 9-4zm9 7v7l-9 4V13l9-4zM3 9l9 4v7l-9-4V9z"/></svg>
+              </div>
+              <h3>Custom Trust Widget</h3>
+              <p>Embed real-time ratings with your brand styling. White is the hero—clean, credible, and clear.</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3l9.5 7H2.5L12 3zm-9.5 9H21.5v9H2.5v-9z"/></svg>
+              </div>
+              <h3>Live Review Sync</h3>
+              <p>Automatically pulls in the latest verified reviews—no manual maintenance required.</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 22s8-4.5 8-10V6l-8-4-8 4v6c0 5.5 8 10 8 10z"/></svg>
+              </div>
+              <h3>Trust-first Design</h3>
+              <p>Thoughtful typography, spacing, and white accenting ensure your message stays front and center.</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 3h18v2H3V3zm2 4h14v2H5V7zm-2 4h18v2H3v-2zm2 4h14v2H5v-2zM3 19h18v2H3v-2z"/></svg>
+              </div>
+              <h3>Responsive & Fast</h3>
+              <p>Grid-based layout, optimized assets, and snappy interactions across devices.</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v5h2V5h5V3H5zm9 0v2h5v5h2V5a2 2 0 00-2-2h-5zM3 14v5a2 2 0 002 2h5v-2H5v-5H3zm18 0h-2v5h-5v2h5a2 2 0 002-2v-5z"/></svg>
+              </div>
+              <h3>Easy Integration</h3>
+              <p>Drop-in script and clean, accessible markup. No heavy frameworks required.</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 1l3 8h8l-6.5 4.8L19 22l-7-5-7 5 2.5-8.2L1 9h8z"/></svg>
+              </div>
+              <h3>Built-in Social Proof</h3>
+              <p>Show star ratings, highlights, and key metrics that matter to new members.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Questions? We’re here to help</h2>
+          <p>Chat with us or drop a message—no pressure, just answers.</p>
+        </div>
+        <div class="grid">
+          <div class="col-6">
+            <div class="card">
+              <h3>Message us</h3>
+              <p>Use the chatbot in the corner to get instant answers about membership, delivery, and billing.</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <h3>Email</h3>
+              <p>Prefer email? Reach us at hello@craftclub.example and we’ll get back within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <div class="foot-brand">
+            <img src="https://dth50iqs19w2y.cloudfront.net/static/favicon/favicon-32x32.png" alt="">
+            <strong>Trustpilot Custom Widget</strong>
+          </div>
+          <p style="color:var(--muted); margin:12px 0 0; max-width:520px">
+            Transparent reviews, beautiful design, and a craft beer experience members love. Your trust, our priority.
+          </p>
+        </div>
+        <div class="foot-nav">
+          <strong>Navigate</strong>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div>
+          <strong>Get in touch</strong>
+          <p style="color:var(--muted); margin:10px 0 14px">Questions? Tap the chatbot to speak to us.</p>
+          <div class="social" aria-label="Social links">
+            <a href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.5 7.43L22.5 22H16l-5-6.5L5 22H2.244L9.1 13.86 2.5 2H9l4.5 6L18.244 2zm-1.744 18h2.079L7.873 4H5.794l10.706 16z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.3 2.3.5.6.3 1 .6 1.5 1.1.5.5.8.9 1.1 1.5.2.4.4 1.1.5 2.3.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.9-.5 2.3-.3.6-.6 1-1.1 1.5-.5.5-.9.8-1.5 1.1-.4.2-1.1.4-2.3.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.3-2.3-.5-.6-.3-1-.6-1.5-1.1-.5-.5-.8-.9-1.1-1.5-.2-.4-.4-1.1-.5-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.9.5-2.3.3-.6.6-1 1.1-1.5.5-.5.9-.8 1.5-1.1.4-.2 1.1-.4 2.3-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1 0-1.5.2-1.9.3-.5.2-.8.3-1.1.6-.3.3-.5.6-.6 1.1-.1.4-.3.9-.3 1.9-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1 .2 1.5.3 1.9.2.5.3.8.6 1.1.3.3.6.5 1.1.6.4.1.9.3 1.9.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1 0 1.5-.2 1.9-.3.5-.2.8-.3 1.1-.6.3-.3.5-.6.6-1.1.1-.4.3-.9.3-1.9.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1-.2-1.5-.3-1.9-.2-.5-.3-.8-.6-1.1-.3-.3-.6-.5-1.1-.6-.4-.1-.9-.3-1.9-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm0 2a4.5 4.5 0 100 9 4.5 4.5 0 000-9zm5.9-2.7a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a4 4 0 00-2.8-2.8C18.7 3 12 3 12 3s-6.7 0-8.7.4A4 4 0 00.5 6.2 41.9 41.9 0 000 12c0 1.9.1 3.8.5 5.8a4 4 0 002.8 2.8C5.3 21 12 21 12 21s6.7 0 8.7-.4a4 4 0 002.8-2.8c.4-2 .5-3.9.5-5.8 0-1.9-.1-3.8-.5-5.8zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="container legal">
+        <div>© <span id="year"></span> Trustpilot Custom Widget. All rights reserved.</div>
+        <a href="#home" class="eyebrow" style="background:transparent">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(function(link){
+      link.addEventListener('click', function(e){
+        const id = this.getAttribute('href');
+        if(id.length > 1){
+          e.preventDefault();
+          const target = document.querySelector(id);
+          if(!target) return;
+          const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
+          const nav = document.getElementById('nav');
+          if(nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            document.getElementById('burger').setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav');
+    burger.addEventListener('click', function(){
+      const isOpen = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Button hover sheen effect (JS-enhanced)
+    const btns = document.querySelectorAll('.btn');
+    btns.forEach(btn=>{
+      const sheen = btn.querySelector('.sheen');
+      btn.addEventListener('mousemove', (e)=>{
+        const rect = btn.getBoundingClientRect();
+        const x = ((e.clientX - rect.left)/rect.width)*100;
+        const y = ((e.clientY - rect.top)/rect.height)*100;
+        btn.style.setProperty('--x', x + '%');
+        btn.style.setProperty('--y', y + '%');
+        btn.classList.add('hovering');
+      });
+      btn.addEventListener('mouseleave', ()=> btn.classList.remove('hovering'));
+      // Keyboard focus adds subtle effect
+      btn.addEventListener('focus', ()=> btn.classList.add('hovering'));
+      btn.addEventListener('blur', ()=> btn.classList.remove('hovering'));
+    });
+
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+  window.chatbotConfig = {
+    apiUrl: "https://makeitsimpl.app.n8n.cloud/webhook/chat",
+    websiteUrl: "https://www.beer52.com/",
+    headers: {
+      "Authorization": "Basic Y2hhdGJvdDppbG92ZWNoYXRib3RzITEyMzQ="
+    }
+  };
+  </script>
+  <script src="https://makeitsimpl.ai/chatbot-widget.js"></script>
+</body>
+</html>
