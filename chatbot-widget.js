@@ -1,93 +1,126 @@
 (function () {
-  // Create floating button
+  // ✅ Default config (can be overridden from window.chatbotConfig)
+  const config = window.chatbotConfig || {};
+  const apiUrl = config.apiUrl || "https://makeitsimpl.app.n8n.cloud/webhook/chat";
+  const websiteUrl = config.websiteUrl || "unknown-site";
+  const headers = {
+    "Content-Type": "application/json",
+    ...(config.headers || {})
+  };
+
+  // ✅ Create floating chat button
   const button = document.createElement("div");
-  button.innerHTML = "💬";
+  button.innerText = "💬 Chat";
   button.style.position = "fixed";
   button.style.bottom = "20px";
   button.style.right = "20px";
-  button.style.width = "50px";
-  button.style.height = "50px";
-  button.style.background = "#333";
-  button.style.color = "#fff";
-  button.style.borderRadius = "50%";
-  button.style.display = "flex";
-  button.style.justifyContent = "center";
-  button.style.alignItems = "center";
+  button.style.background = "#4A90E2";
+  button.style.color = "white";
+  button.style.padding = "12px 16px";
+  button.style.borderRadius = "24px";
   button.style.cursor = "pointer";
-  button.style.zIndex = "9999";
+  button.style.fontFamily = "Arial, sans-serif";
+  button.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
   document.body.appendChild(button);
 
-  // Create chat window
+  // ✅ Create chat window
   const chatWindow = document.createElement("div");
   chatWindow.style.position = "fixed";
-  chatWindow.style.bottom = "80px";
+  chatWindow.style.bottom = "70px";
   chatWindow.style.right = "20px";
   chatWindow.style.width = "300px";
   chatWindow.style.height = "400px";
-  chatWindow.style.background = "#fff";
-  chatWindow.style.border = "1px solid #ccc";
-  chatWindow.style.borderRadius = "10px";
+  chatWindow.style.background = "white";
+  chatWindow.style.border = "1px solid #ddd";
+  chatWindow.style.borderRadius = "8px";
   chatWindow.style.display = "none";
   chatWindow.style.flexDirection = "column";
   chatWindow.style.overflow = "hidden";
-  chatWindow.style.zIndex = "9999";
+  chatWindow.style.fontFamily = "Arial, sans-serif";
   document.body.appendChild(chatWindow);
 
-  const messages = document.createElement("div");
-  messages.style.flex = "1";
-  messages.style.padding = "10px";
-  messages.style.overflowY = "auto";
-  chatWindow.appendChild(messages);
+  // ✅ Chat area
+  const messagesDiv = document.createElement("div");
+  messagesDiv.style.flex = "1";
+  messagesDiv.style.padding = "10px";
+  messagesDiv.style.overflowY = "auto";
+  chatWindow.appendChild(messagesDiv);
 
-  const inputWrapper = document.createElement("div");
-  inputWrapper.style.display = "flex";
-  inputWrapper.style.borderTop = "1px solid #ccc";
+  // ✅ Input area
+  const inputDiv = document.createElement("div");
+  inputDiv.style.display = "flex";
+  inputDiv.style.borderTop = "1px solid #ddd";
   const input = document.createElement("input");
   input.type = "text";
   input.placeholder = "Ask me anything...";
   input.style.flex = "1";
-  input.style.border = "none";
   input.style.padding = "10px";
-  inputWrapper.appendChild(input);
-  const send = document.createElement("button");
-  send.innerText = "Send";
-  inputWrapper.appendChild(send);
-  chatWindow.appendChild(inputWrapper);
+  input.style.border = "none";
+  inputDiv.appendChild(input);
+  const sendBtn = document.createElement("button");
+  sendBtn.innerText = "Send";
+  sendBtn.style.border = "none";
+  sendBtn.style.background = "#4A90E2";
+  sendBtn.style.color = "white";
+  sendBtn.style.padding = "10px 16px";
+  sendBtn.style.cursor = "pointer";
+  inputDiv.appendChild(sendBtn);
+  chatWindow.appendChild(inputDiv);
 
-  function addMessage(text, from) {
+  // ✅ Toggle chat window
+  button.onclick = () => {
+    chatWindow.style.display = chatWindow.style.display === "none" ? "flex" : "none";
+  };
+
+  // ✅ Append message to chat
+  function addMessage(sender, text) {
     const msg = document.createElement("div");
+    msg.style.margin = "6px 0";
+    msg.style.padding = "8px";
+    msg.style.borderRadius = "6px";
+    msg.style.maxWidth = "80%";
+    msg.style.wordWrap = "break-word";
     msg.innerText = text;
-    msg.style.margin = "5px 0";
-    msg.style.textAlign = from === "user" ? "right" : "left";
-    messages.appendChild(msg);
-    messages.scrollTop = messages.scrollHeight;
+
+    if (sender === "user") {
+      msg.style.background = "#DCF8C6";
+      msg.style.alignSelf = "flex-end";
+    } else {
+      msg.style.background = "#F1F0F0";
+      msg.style.alignSelf = "flex-start";
+    }
+
+    messagesDiv.appendChild(msg);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 
+  // ✅ Send query to webhook
   async function sendMessage() {
-    const userText = input.value.trim();
-    if (!userText) return;
-    addMessage(userText, "user");
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage("user", text);
     input.value = "";
 
-    const res = await fetch(window.chatbotConfig.apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        website_url: window.chatbotConfig.websiteUrl,
-        query: userText,
-      }),
-    });
-    const data = await res.json();
-    addMessage(data.answer, "bot");
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          query: text,
+          websiteUrl
+        })
+      });
+
+      const data = await response.json();
+      addMessage("bot", data.answer || "No response");
+    } catch (err) {
+      addMessage("bot", "⚠️ Error: " + err.message);
+    }
   }
 
-  send.onclick = sendMessage;
-  input.addEventListener("keypress", (e) => {
+  sendBtn.onclick = sendMessage;
+  input.addEventListener("keypress", e => {
     if (e.key === "Enter") sendMessage();
   });
-
-  button.onclick = () => {
-    chatWindow.style.display =
-      chatWindow.style.display === "none" ? "flex" : "none";
-  };
 })();
