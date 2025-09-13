@@ -293,49 +293,33 @@
   // ======= Send logic =======
   let sending = false;
 
-  async function sendMessage() {
-    const text = input.value.trim();
-    if (!text || sending) return;
+async function sendMessage(message) {
+  const config = window.chatbotConfig || {};
 
-    sending = true;
-    sendBtn.disabled = true;
+  const response = await fetch(config.apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(config.headers || {})
+    },
+    body: JSON.stringify({
+      websiteUrl: config.websiteUrl,
+      message: message
+    })
+  });
 
-    addBubble("user", text);
-    input.value = "";
-
-    const typingRow = addTyping();
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query: text, websiteUrl }),
-      });
-
-      if (!response.ok) throw new Error(`Server responded ${response.status}`);
-
-      const data = await response.json();
-      const answer = data.answer || "No response.";
-      messages.removeChild(typingRow);
-      addBubble("bot", answer);
-    } catch (err) {
-      messages.removeChild(typingRow);
-      addBubble(
-        "bot",
-        "Sorry, I couldn't reach the server. Please try again in a moment.",
-        "cb-error"
-      );
-      console.warn("[ChatWidget] fetch error:", err);
-    } finally {
-      sending = false;
-      sendBtn.disabled = false;
-      input.focus();
-    }
+  if (!response.ok) {
+    throw new Error("Failed to fetch: " + response.statusText);
   }
 
-  sendBtn.onclick = sendMessage;
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") sendMessage();
-  });
+  return await response.json();
+}
+
+// Hook up button + Enter key
+sendBtn.onclick = () => sendMessage(input.value.trim());
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage(input.value.trim());
+});
+
 })();
 
