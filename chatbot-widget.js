@@ -294,26 +294,43 @@
   let sending = false;
 
 async function sendMessage(message) {
-  const config = window.chatbotConfig || {};
+  if (!message) return;
+  
+  // Show user bubble
+  addBubble("user", message);
+  input.value = "";
 
-  const response = await fetch(config.apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(config.headers || {})
-    },
-    body: JSON.stringify({
-      websiteUrl: config.websiteUrl,
-      message: message
-    })
-  });
+  // Typing indicator
+  const typingRow = addTyping();
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch: " + response.statusText);
+  try {
+    const response = await fetch(config.apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(config.headers || {})
+      },
+      body: JSON.stringify({
+        websiteUrl: config.websiteUrl,
+        message: message
+      })
+    });
+
+    const data = await response.json();
+    typingRow.remove();
+
+    if (data.answer) {
+      addBubble("bot", data.answer);
+    } else {
+      addBubble("bot", "⚠️ No response received");
+    }
+
+  } catch (err) {
+    typingRow.remove();
+    addBubble("bot", "⚠️ Error: " + err.message, "cb-error");
   }
-
-  return await response.json();
 }
+
 
 // Hook up button + Enter key
 sendBtn.onclick = () => sendMessage(input.value.trim());
