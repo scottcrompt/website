@@ -257,13 +257,37 @@
     document.body.appendChild(chatWindow);
 
     // ======= Open / Close =======
-    const toggle = (forceOpen) => {
-        const willOpen = forceOpen ?? !chatWindow.classList.contains("cb-open");
-        if (willOpen) chatWindow.classList.add("cb-open");
-        else chatWindow.classList.remove("cb-open");
-    };
-    button.onclick = () => toggle(true);
-    closeBtn.onclick = () => toggle(false);
+const toggle = (forceOpen) => {
+    const willOpen = forceOpen ?? !chatWindow.classList.contains("cb-open");
+    if (willOpen) {
+        chatWindow.classList.add("cb-open");
+    } else {
+        chatWindow.classList.remove("cb-open");
+    }
+};
+
+// Open/close when clicking the button
+button.onclick = (e) => {
+    e.stopPropagation();
+    toggle();
+};
+
+// Close when clicking the close button
+closeBtn.onclick = (e) => {
+    e.stopPropagation();
+    toggle(false);
+};
+
+// Close when clicking outside of chat window & button
+document.addEventListener("click", (e) => {
+    if (
+        chatWindow.classList.contains("cb-open") &&
+        !chatWindow.contains(e.target) &&
+        !button.contains(e.target)
+    ) {
+        toggle(false);
+    }
+});
 
     // ======= Message helpers =======
     function addBubble(sender, text, extraClass = "") {
